@@ -11,14 +11,35 @@
          ###########
 
 ' ' = None
-'#' = Wall
-'.' = Floor
-'+' = Door
-'<' = Upstair
-'>' = Downstair
+
+'H' = Wall Horizontal
+'V' = Wall Vertical
+'C' = Wall Corner
+'T' = Wall T-Section
+'X' = Wall Cross-Section
+
+
+'.' = Wood Floor
+',' = Kitchen Floor
+';' = Bathroom Floor
+':' = Carpet Floor
+'*' = Grass
+'`' = Paving Slab
+'|' = Small Window
+'\' = Large Window Left
+'/' = Large Window Right
+
+
+'+' = Door Open
+'-' = Door Closed
+
+
+'t' = Table
+'c' = Chair
+
 'O' = Oven
 'T' = Toilet
-'t' = Table
+
 'W' = washing machine 
 'S' = sofa
 'C' = car
@@ -32,10 +53,14 @@
 's' = sink
 'w' = wardrobe 
 'M' = mirror 
-'c' =Cleaning utensils
+'u' = Cleaning utensils
 '*' = coat rack
-'b' = bean bag 
+'d' = bean bag 
 '[' = desk 
 'f' = filing cabinet
 'k' = bookcase
 'g' = console game tile
+
+
+'<' = Upstair
+'>' = Downstair
