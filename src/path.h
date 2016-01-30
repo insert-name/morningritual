@@ -4,16 +4,18 @@
 #include "vector"
 
 #include "SFML/Graphics.hpp"
+#include "glm/glm.hpp"
 
 namespace MorningRitual
 {
 	struct Path
 	{
 		bool success = false;
-		std::vector<sf::Vector2u> points;
+		std::vector<glm::ivec3> points;
 		
-		void push(sf::Vector2u point) { this->points.push_back(point); }
-		sf::Vector2u pop() { sf::Vector2u a = this->points.back(); this->points.pop_back(); return a; }
+		void push(glm::ivec3 point) { this->points.push_back(point); }
+		glm::ivec3 pop() { glm::ivec3 a = this->points.back(); this->points.pop_back(); return a; }
+		int size() { return this->points.size(); }
 	};
 }
 

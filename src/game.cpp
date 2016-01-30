@@ -74,6 +74,9 @@ namespace MorningRitual
 			//Reset the window view
 			this->window.setView(this->view);
 			
+			//Tick the world
+			this->world.tick();
+			
 			this->draw();
 		}
 	}
@@ -95,7 +98,7 @@ namespace MorningRitual
 				Cell* cell = visible_layer->get(i, j);
 				
 				sf::Vector2u pos = this->getTileRectangle(cell);
-				tile.setTextureRect(sf::IntRect(pos.x, pos.y, 64.0f, 64.0f));
+				tile.setTextureRect(sf::IntRect(pos.x, pos.y, 64, 64));
 				tile.setPosition(sf::Vector2f(64.0f * i, 64.0f * j));
 		
 				if (cell->type != CellType::EMPTY)
@@ -103,7 +106,30 @@ namespace MorningRitual
 			}
 		}
 		
+		this->drawEntities();
+		
 		this->window.display();
+	}
+	
+	void Game::drawEntities()
+	{
+		for (Entity entity : this->world.entities)
+		{
+			sf::Sprite tile;
+			tile.setTexture(this->tileset);
+			
+			tile.setTextureRect(sf::IntRect(3 * 64, 4 * 64, 64, 64));
+			tile.setPosition(sf::Vector2f(entity.pos.x * 64, entity.pos.y * 64));
+			
+			sf::RectangleShape tile2;
+			tile2.setSize(sf::Vector2f(64, 64));
+			
+			//for (
+			//tile2.setPosition(sf::Vector2f());
+			
+			if (entity.pos.z == this->current_layer)
+				window.draw(tile);
+		}
 	}
 	
 	sf::Vector2u Game::getTileRectangle(Cell* cell)
