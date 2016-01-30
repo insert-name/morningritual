@@ -20,7 +20,7 @@ namespace MorningRitual
 		
 		printf("Created view\n");
 		
-		this->tileset.loadFromFile("../data/tiles/tileTest.png");
+		this->tileset.loadFromFile("../data/tiles/tileTest3.png");
 		
 		printf("Opened tileset\n");
 	}
@@ -39,6 +39,14 @@ namespace MorningRitual
 					case sf::Event::Closed:
 						this->window.close();
 						break;
+					
+					case sf::Event::KeyPressed:
+						if (event.key.code == sf::Keyboard::Key::Comma)
+							this->current_layer = std::min(this->world.depth - 1, std::max(0, this->current_layer + 1));
+						if (event.key.code == sf::Keyboard::Key::Period)
+							this->current_layer = std::min(this->world.depth - 1, std::max(0, this->current_layer - 1));
+						break;
+					
 					default:
 						break;
 				}
@@ -72,7 +80,7 @@ namespace MorningRitual
 	
 	void Game::draw()
 	{
-		this->window.clear(sf::Color::Blue);
+		this->window.clear(sf::Color(50, 200, 50));
 		
 		sf::Sprite tile;
 		tile.setTexture(this->tileset);
@@ -90,7 +98,8 @@ namespace MorningRitual
 				tile.setTextureRect(sf::IntRect(pos.x, pos.y, 64.0f, 64.0f));
 				tile.setPosition(sf::Vector2f(64.0f * i, 64.0f * j));
 		
-				this->window.draw(tile);
+				if (cell->type != CellType::EMPTY)
+					this->window.draw(tile);
 			}
 		}
 		
@@ -105,10 +114,42 @@ namespace MorningRitual
 				return sf::Vector2u(0, 0);
 				break;
 			case CellType::FLOOR:
-				return sf::Vector2u(128, 0);
+				return sf::Vector2u(64, 0);
+				break;
+			case CellType::FURNITURE:
+				switch (cell->variant)
+				{
+					case 0:
+						return sf::Vector2u(64, 64);
+						break;
+					case 1:
+						return sf::Vector2u(448, 64);
+						break;
+					case 2:
+						return sf::Vector2u(128, 256);
+						break;
+					case 3:
+						return sf::Vector2u(0, 192);
+						break;
+					case 4:
+						return sf::Vector2u(192, 64);
+						break;
+					default:
+						return sf::Vector2u(0, 0);
+						break;
+				}
+				break;
+			case CellType::DOOR:
+				return sf::Vector2u(448, 0);
 				break;
 			case CellType::WALL:
-				return sf::Vector2u(128, 128);
+				return sf::Vector2u(128, 0);
+				break;
+			case CellType::UPSTAIR:
+				return sf::Vector2u(0, 64);
+				break;
+			case CellType::DOWNSTAIR:
+				return sf::Vector2u(0, 64);
 				break;
 			default:
 				return sf::Vector2u(0, 0);
