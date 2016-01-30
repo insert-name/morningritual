@@ -39,5 +39,8 @@
 'f' = filing cabinet
 'k' = bookcase
 'g' = console game tile
+<<<<<<< HEAD
 'h' = chair
 'F' = fridge 
+=======
+>>>>>>> origin/master

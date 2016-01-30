@@ -113,10 +113,10 @@ namespace MorningRitual
 				if (std::abs(highest - lowest) != 1)
 				return false;
 			
-			if (this->get(glm::ivec3(p1.x, p1.y, lowest))->type != CellType::UPSTAIR)
+			if (this->get(glm::ivec3(p1.x, p1.y, lowest))->type != CellType::CT_UPSTAIR)
 				return false;
 				
-			if (this->get(glm::ivec3(p1.x, p1.y, highest))->type != CellType::DOWNSTAIR)
+			if (this->get(glm::ivec3(p1.x, p1.y, highest))->type != CellType::CT_DOWNSTAIR)
 				return false;
 		}
 		
@@ -125,7 +125,7 @@ namespace MorningRitual
 		
 		if (net <= 1)
 		{
-			if (this->get(p2)->solid == true)
+			if (this->get(p2)->isSolid())
 				return false;
 			else
 				return true;
@@ -134,7 +134,7 @@ namespace MorningRitual
 			return false;
 	}
 	
-	std::vector<glm::ivec3> World::getMooreLocality(glm::ivec3 p)
+	std::vector<glm::ivec3> World::getMooreLocality(glm::ivec3 p, bool include_depth)
 	{
 		std::vector<glm::ivec3> locals;
 		
@@ -142,8 +142,12 @@ namespace MorningRitual
 		locals.push_back(glm::ivec3(p.x - 1, p.y + 0, p.z + 0));
 		locals.push_back(glm::ivec3(p.x + 0, p.y + 1, p.z + 0));
 		locals.push_back(glm::ivec3(p.x + 0, p.y - 1, p.z + 0));
-		locals.push_back(glm::ivec3(p.x + 0, p.y + 0, p.z + 1));
-		locals.push_back(glm::ivec3(p.x + 0, p.y + 0, p.z - 1));
+		
+		if (include_depth)
+		{
+			locals.push_back(glm::ivec3(p.x + 0, p.y + 0, p.z + 1));
+			locals.push_back(glm::ivec3(p.x + 0, p.y + 0, p.z - 1));
+		}
 		
 		return locals;
 	}
@@ -246,5 +250,18 @@ namespace MorningRitual
 			p.success = false;
 			return p;
 		}
+	}
+	
+	glm::ivec3 World::findNearbyEmpty(glm::ivec3 pos)
+	{
+		std::vector<glm::ivec3> locals = this->getMooreLocality(pos, false);
+		
+		for (glm::ivec3 place : locals)
+		{
+			if (!this->get(place)->isSolid())
+				return place;
+		}
+		
+		return glm::ivec3(-1, -1, -1);
 	}
 }

@@ -18,6 +18,9 @@ namespace MorningRitual
 		//Setup sound manager
 		this->sound_manager.data_directory = this->data_directory;
 		this->sound_manager.setup();
+		this->sound_manager.playMusic(MusicType::MAIN_GAMEPLAY);
+		this->sound_manager.playMusic(MusicType::PANIC_1);
+		this->sound_manager.playMusic(MusicType::PANIC_2);
 	}
 	
 	void GUI::tick()
@@ -44,7 +47,7 @@ namespace MorningRitual
 	void GUI::notify(std::string msg, glm::ivec3 position)
 	{
 		this->notification_widgets.push_back(Widget());
-		this->notification_widgets.back().lifetime = 180;
+		this->notification_widgets.back().lifetime = 300;
 		this->notification_widgets.back().message = msg;
 		this->notification_widgets.back().position = sf::Vector2f(16, 560);
 		this->notification_widgets.back().notify_pos = position;
@@ -53,6 +56,6 @@ namespace MorningRitual
 		for (int i = 0; i < this->notification_widgets.size(); i ++)
 			this->notification_widgets[i].position.y -= 80;
 		
-			this->sound_manager.play(SoundType::NOTIFICATION);
+			this->sound_manager.playSound(SoundType::NOTIFICATION);
 	}
 }

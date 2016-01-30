@@ -27,37 +27,37 @@ namespace MorningRitual
 		switch (cell)
 		{
 			case '#':
-				this->set(x, y, Cell(CellType::WALL, 0, true, 0));
+				this->set(x, y, Cell(CellType::CT_WALL, 0, true, 0));
 				break;
 			case '.':
-				this->set(x, y, Cell(CellType::FLOOR, 0, false, 0));
+				this->set(x, y, Cell(CellType::CT_FLOOR, 0, false, 0));
 				break;
 			case '~':
-				this->set(x, y, Cell(CellType::FLOOR, 1, false, 0));
+				this->set(x, y, Cell(CellType::CT_FLOOR, 1, false, 0));
 				break;
 			case '+':
-				this->set(x, y, Cell(CellType::DOOR, 0, true, 0));
+				this->set(x, y, Cell(CellType::CT_DOOR, 0, true, 0));
 				break;
 			case 't':
-				this->set(x, y, Cell(CellType::FURNITURE, 0, true, 0));
+				this->set(x, y, Cell(CellType::CT_FURNITURE, 0, true, 0));
 				break;
 			case 'T':
-				this->set(x, y, Cell(CellType::FURNITURE, 1, false, 0));
+				this->set(x, y, Cell(CellType::CT_FURNITURE, 1, false, 0));
 				break;
 			case 'W':
-				this->set(x, y, Cell(CellType::FURNITURE, 2, true, 0));
+				this->set(x, y, Cell(CellType::CT_FURNITURE, 2, true, 0));
 				break;
 			case 'O':
-				this->set(x, y, Cell(CellType::FURNITURE, 3, false, 0));
+				this->set(x, y, Cell(CellType::CT_FURNITURE, 3, false, 0));
 				break;
 			case 's':
-				this->set(x, y, Cell(CellType::FURNITURE, 4, true, 0));
+				this->set(x, y, Cell(CellType::CT_FURNITURE, 4, true, 0));
 				break;
 			case '<':
-				this->set(x, y, Cell(CellType::UPSTAIR, 0, false, 0));
+				this->set(x, y, Cell(CellType::CT_UPSTAIR, 0, false, 0));
 				break;
 			case '>':
-				this->set(x, y, Cell(CellType::DOWNSTAIR, 0, false, 0));
+				this->set(x, y, Cell(CellType::CT_DOWNSTAIR, 0, false, 0));
 				break;
 			case ' ':
 				this->set(x, y, Cell());

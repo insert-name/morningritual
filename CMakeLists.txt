@@ -36,6 +36,7 @@ src/gui.cpp
 src/entity.cpp
 src/soundmanager.cpp
 src/widget.cpp
+src/cell.cpp
 )
 
 #Take the code and turn it into the executable

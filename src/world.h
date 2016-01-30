@@ -52,7 +52,8 @@ namespace MorningRitual
 			
 			Path findPath(glm::ivec3 p1, glm::ivec3 p2);
 			bool canTraverse(glm::ivec3 p1, glm::ivec3 p2);
-			std::vector<glm::ivec3> getMooreLocality(glm::ivec3 p);
+			std::vector<glm::ivec3> getMooreLocality(glm::ivec3 p, bool include_depth = true);
+			glm::ivec3 findNearbyEmpty(glm::ivec3 pos);
 	};
 }
 
