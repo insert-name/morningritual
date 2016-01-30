@@ -5,6 +5,7 @@
 #include "string"
 
 #include "layer.h"
+#include "path.h"
 
 namespace MorningRitual
 {
@@ -21,6 +22,11 @@ namespace MorningRitual
 			void load(std::string levelname);
 			std::string loadFile(std::string filename);
 			void addLayer(int w, int h, std::string data);
+			
+			Cell* get(int x, int y, int z);
+			
+			Path findPath(int x1, int y1, int z1, int x2, int y2, int z2);
+			bool canTraverse(int x1, int y1, int z1, int x2, int y2, int z2);
 	};
 }
 

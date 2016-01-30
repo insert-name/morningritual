@@ -4,6 +4,7 @@
 #include "SFML/Graphics.hpp"
 
 #include "world.h"
+#include "gui.h"
 
 namespace MorningRitual
 {
@@ -19,6 +20,9 @@ namespace MorningRitual
 			
 			World world;
 			int current_layer = 0;
+			
+			GUI gui;
+			
 			Game();
 			
 			void run();

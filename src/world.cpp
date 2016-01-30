@@ -73,4 +73,30 @@ namespace MorningRitual
 		buffer << file.rdbuf();
 		return buffer.str();
 	}
+	
+	Cell* World::get(int x, int y, int z)
+	{
+		return this->layers[z].get(x, y);
+	}
+	
+	bool World::canTraverse(int x1, int y1, int z1, int x2, int y2, int z2)
+	{
+		int net = std::abs(x1 - x2) + std::abs(y1 - y2) + std::abs(z1 - z2);
+		
+		if (net == 0)
+			return true;
+		else if (net == 1)
+		{
+			if (this->get(x2, y2, z2)->solid == false)
+				return true;
+		}
+		else
+			return false;
+	}
+	
+	Path World::findPath(int x1, int y1, int z1, int x2, int y2, int z2)
+	{
+		std::vector<sf::Vector2u> open_set;
+		std::vector<sf::Vector2u> closed_set;
+	}
 }
