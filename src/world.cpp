@@ -14,19 +14,17 @@ namespace MorningRitual
 		printf("Created world\n");
 		
 		this->setup();
-		this->load("0");
+		this->load("Level 1");
 	}
 	
 	void World::setup()
 	{
 		this->layers.clear();
-		
-		printf("Created a world of depth %d\n", this->depth);
 	}
 	
 	void World::load(std::string levelname)
 	{
-		std::string data = this->loadFile(this->level_directory + "/lvl_" + levelname + "_root.txt");
+		std::string data = this->loadFile(this->level_directory + "/" + levelname + "/lvl_0_root.txt");
 		
 		//printf(("The contents of the level file " + levelname + " is:\n" + data).c_str());
 		
@@ -39,7 +37,7 @@ namespace MorningRitual
 		
 		for (int i = 0; i < this->depth; i ++)
 		{
-			this->addLayer(w, h, this->loadFile(this->level_directory + "/" + values[4 + i]));
+			this->addLayer(w, h, this->loadFile(this->level_directory + "/" + levelname + "/" + values[4 + i]));
 		}
 		
 	}

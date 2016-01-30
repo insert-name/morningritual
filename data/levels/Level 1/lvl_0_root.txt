@@ -1,6 +1,5 @@
 The first level
-32
-24
+44
+16
 1
 lvl_layer0.txt
-

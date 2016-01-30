@@ -12,7 +12,7 @@ namespace MorningRitual
 	{
 		public:
 			std::string name = "None";
-			int depth = 2;
+			int depth = 0;
 			std::vector<Layer> layers;
 			std::string level_directory = "../data/levels";
 			
