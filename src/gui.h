@@ -4,6 +4,7 @@
 #include "glm/glm.hpp"
 
 #include "widget.h"
+#include "soundmanager.h"
 
 namespace MorningRitual
 {
@@ -13,6 +14,8 @@ namespace MorningRitual
 			std::vector<Widget> notification_widgets;
 			
 			std::string data_directory;
+			
+			SoundManager sound_manager;
 			
 			GUI();
 			void setup();

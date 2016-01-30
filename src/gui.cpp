@@ -14,6 +14,10 @@ namespace MorningRitual
 		this->notify("Testing messages once");
 		this->notify("Testing 2");
 		this->notify("Test 3");
+		
+		//Setup sound manager
+		this->sound_manager.data_directory = this->data_directory;
+		this->sound_manager.setup();
 	}
 	
 	void GUI::tick()
@@ -48,5 +52,7 @@ namespace MorningRitual
 		
 		for (int i = 0; i < this->notification_widgets.size(); i ++)
 			this->notification_widgets[i].position.y -= 80;
+		
+			this->sound_manager.play(SoundType::NOTIFICATION);
 	}
 }

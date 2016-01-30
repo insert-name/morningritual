@@ -24,17 +24,13 @@ namespace MorningRitual
 		
 		printf("Opened tileset\n");
 		
-		//Setup world
-		this->world.data_directory = this->data_directory;
-		this->world.setup();
-		
-		//Setup sound manager
-		this->sound_manager.data_directory = this->data_directory;
-		this->sound_manager.setup();
-		
 		//Setup GUI
 		this->gui.data_directory = this->data_directory;
 		this->gui.setup();
+		
+		//Setup world
+		this->world.data_directory = this->data_directory;
+		this->world.setup();
 		
 		//Find the right font
 		this->mainfont.loadFromFile(this->data_directory + "/fonts/ENYO_Serif_light.ttf");
@@ -187,7 +183,7 @@ namespace MorningRitual
 			this->window.draw(component);
 			
 			sf::Text message;
-			message.setPosition(sf::Vector2f(widget->position.x + 16, widget->position.y + 8));
+			message.setPosition(this->view.getCenter() - this->view.getSize() / 2.0f + sf::Vector2f(widget->position.x + 16, widget->position.y + 8));
 			message.setFont(this->mainfont);
 			message.setString(widget->message);
 			message.setCharacterSize(32);

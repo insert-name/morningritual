@@ -24,7 +24,7 @@ namespace MorningRitual
 		
 		this->entities.push_back(Entity());
 		this->entities.back().pos = glm::ivec3(3, 1, 0);
-		this->entities.back().path = this->findPath(glm::ivec3(3, 1, 0), glm::ivec3(40, 7, 1));
+		this->entities.back().path = this->findPath(glm::ivec3(3, 1, 0), glm::ivec3(6, 11, 0));
 	}
 	
 	void World::tick(Game* game)
@@ -110,7 +110,7 @@ namespace MorningRitual
 			if (glm::ivec2(p1.x, p1.y) != glm::ivec2(p2.x, p2.y))
 				return false;
 			
-			if (highest - lowest != 1)
+				if (std::abs(highest - lowest) != 1)
 				return false;
 			
 			if (this->get(glm::ivec3(p1.x, p1.y, lowest))->type != CellType::UPSTAIR)
