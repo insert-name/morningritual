@@ -37,13 +37,13 @@ namespace MorningRitual
 			std::string name = "None";
 			int depth = 0;
 			std::vector<Layer> layers;
-			std::string level_directory = "../data/levels";
+			std::string data_directory;
 			
 			std::vector<Entity> entities;
 			
 			World();
 			void setup();
-			void tick();
+			void tick(Game* game);
 			void load(std::string levelname);
 			std::string loadFile(std::string filename);
 			void addLayer(int w, int h, std::string data);

@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "game.h"
 
 namespace MorningRitual
 {
@@ -7,11 +8,17 @@ namespace MorningRitual
 		printf("Created entity\n");
 	}
 	
-	void Entity::tick()
+	void Entity::tick(Game* game)
 	{
-		if (this->lifetime % 30 == 0 && this->path.size() > 0)
+		if (this->lifetime % 10 == 0 && this->state == EntityState::PATH)
 		{
-			this->pos = this->path.pop();
+			if (this->path.size() > 0)
+				this->pos = this->path.pop();
+			else
+			{
+				game->gui.notify("Finished pathing", this->pos);
+				this->state = EntityState::STAND;
+			}
 		}
 		
 		this->lifetime ++;

@@ -8,16 +8,26 @@
 
 namespace MorningRitual
 {
+	class Game;
+	
+	enum EntityState
+	{
+		PATH,
+		WANDER,
+		STAND,
+	};
+	
 	class Entity
 	{
 		public:
 			glm::ivec3 pos;
 			int lifetime = 0;
+			EntityState state = EntityState::PATH;
 			
 			Path path;
 			
 			Entity();
-			void tick();
+			void tick(Game* game);
 	};
 }
 
