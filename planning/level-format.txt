@@ -39,4 +39,5 @@
 'f' = filing cabinet
 'k' = bookcase
 'g' = console game tile
-
+'h' = chair
+'F' = fridge 
