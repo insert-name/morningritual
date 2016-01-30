@@ -26,7 +26,7 @@ namespace MorningRitual
 			{
 				this->type = CellType::EMPTY;
 				this->variant = 0;
-				this->solid = false;
+				this->solid = true;
 				this->state = 0;
 			}
 			

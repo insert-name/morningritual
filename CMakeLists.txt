@@ -18,6 +18,9 @@ add_definitions(-std=c++11 -Wall)
 find_package(SFML 2 REQUIRED system window graphics network audio)
 include_directories(${SFML_INCLUDE_DIR})
 
+find_package(GLM REQUIRED)
+include_directories(${GLM_INCLUDE_DIR})
+
 #All the directories containing header files
 include_directories(
 "${PROJECT_SOURCE_DIR}/src/core/"
@@ -30,6 +33,7 @@ src/world.cpp
 src/layer.cpp
 src/common.cpp
 src/gui.cpp
+src/entity.cpp
 )
 
 #Take the code and turn it into the executable

@@ -27,6 +27,7 @@ namespace MorningRitual
 			
 			void run();
 			void draw();
+			void drawEntities();
 			sf::Vector2u getTileRectangle(Cell* cell);
 	};
 }
