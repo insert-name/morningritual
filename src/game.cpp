@@ -186,7 +186,7 @@ namespace MorningRitual
 				return sf::Vector2u(0, 64);
 				break;
 			case CellType::DOWNSTAIR:
-				return sf::Vector2u(0, 64);
+				return sf::Vector2u(0, 128);
 				break;
 			default:
 				return sf::Vector2u(0, 0);

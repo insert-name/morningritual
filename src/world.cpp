@@ -19,7 +19,7 @@ namespace MorningRitual
 		
 		this->entities.push_back(Entity());
 		this->entities.back().pos = glm::ivec3(3, 1, 0);
-		this->entities.back().path = this->findPath(glm::ivec3(3, 1, 0), glm::ivec3(14, 3, 0));
+		this->entities.back().path = this->findPath(glm::ivec3(3, 1, 0), glm::ivec3(40, 7, 1));
 	}
 	
 	void World::setup()
@@ -96,19 +96,34 @@ namespace MorningRitual
 	{
 		int net = std::abs(p1.x - p2.x) + std::abs(p1.y - p2.y) + std::abs(p1.z - p2.z);
 		
-		if (p1.z != p2.z)
+		if (p2.z < 0 || p2.z >= depth)
 			return false;
 		
-		if (p2.z < 0 || p2.z >= this->layers.size())
-			return false;
-		printf("HELLO!\n");
+		if (p1.z != p2.z)
+		{
+			int highest = std::max(p1.z, p2.z);
+			int lowest = std::min(p1.z, p2.z);
+			
+			if (lowest < 0 || highest >= this->depth)
+				return false;
+			
+			if (glm::ivec2(p1.x, p1.y) != glm::ivec2(p2.x, p2.y))
+				return false;
+			
+			if (highest - lowest != 1)
+				return false;
+			
+			if (this->get(glm::ivec3(p1.x, p1.y, lowest))->type != CellType::UPSTAIR)
+				return false;
+				
+			if (this->get(glm::ivec3(p1.x, p1.y, highest))->type != CellType::DOWNSTAIR)
+				return false;
+		}
+		
 		if (p2.x < 0 || p2.y < 0 || p2.x >= this->layers[p2.z].w || p2.y >= this->layers[p2.z].h)
 			return false;
-		printf("HELLO  %d\n", net);
 		
-		if (net == 0)
-			return true;
-		else if (net == 1)
+		if (net <= 1)
 		{
 			if (this->get(p2)->solid == true)
 				return false;
@@ -160,6 +175,7 @@ namespace MorningRitual
 							open_set.push_back(PathPoint(pos, open_set.front().difficulty + 1));
 					
 						printf("Point %d,%d,%d\n", pos.x, pos.y, pos.z);
+						
 						if (pos == p2)
 						{
 							found_path = true;
@@ -201,14 +217,17 @@ namespace MorningRitual
 				
 				for (int i = 0; i < locals.size(); i ++)
 				{
-					int j = dequeAt<PathPoint>(closed_set, PathPoint(locals[i], 0));
-					
-					if (j != -1)
+					if (this->canTraverse(locals[i], pos))
 					{
-						if (closed_set[j].difficulty < lowest)
+						int j = dequeAt<PathPoint>(closed_set, PathPoint(locals[i], 0));
+					
+						if (j != -1)
 						{
-							lowest = closed_set[j].difficulty;
-							newpos = closed_set[j].pos;
+							if (closed_set[j].difficulty < lowest)
+							{
+								lowest = closed_set[j].difficulty;
+								newpos = closed_set[j].pos;
+							}
 						}
 					}
 				}
@@ -227,7 +246,5 @@ namespace MorningRitual
 			p.success = false;
 			return p;
 		}
-		
-		
 	}
 }

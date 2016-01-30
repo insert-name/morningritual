@@ -9,7 +9,7 @@ namespace MorningRitual
 	
 	void Entity::tick()
 	{
-		if (this->lifetime % 30 == 0 && this->path.size() > 0)
+		if (this->lifetime % 10 == 0 && this->path.size() > 0)
 		{
 			this->pos = this->path.pop();
 		}
