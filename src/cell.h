@@ -37,6 +37,11 @@ namespace MorningRitual
 				this->solid = solid;
 				this->state = state;
 			}
+			
+			bool isSolid()
+			{
+				return this->solid;
+			}
 	};
 }
 

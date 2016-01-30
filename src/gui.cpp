@@ -44,7 +44,7 @@ namespace MorningRitual
 	void GUI::notify(std::string msg, glm::ivec3 position)
 	{
 		this->notification_widgets.push_back(Widget());
-		this->notification_widgets.back().lifetime = 180;
+		this->notification_widgets.back().lifetime = 300;
 		this->notification_widgets.back().message = msg;
 		this->notification_widgets.back().position = sf::Vector2f(16, 560);
 		this->notification_widgets.back().notify_pos = position;

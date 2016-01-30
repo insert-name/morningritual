@@ -39,4 +39,3 @@
 'f' = filing cabinet
 'k' = bookcase
 'g' = console game tile
-

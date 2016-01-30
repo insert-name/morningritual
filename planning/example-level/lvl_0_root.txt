@@ -4,3 +4,20 @@ The first level
 2
 lvl_layer0.txt
 lvl_layer1.txt
+3
+Character Name
+Sprite
+11
+8
+14
+BRUSH_TEETH
+FIND_FOOD
+COOK_FOOD
+EAT_FOOD
+FEED_CAT
+PUT_ON_CLOTHES
+SHOWER
+SHAVE
+TOILET
+DO_WASHING
+
