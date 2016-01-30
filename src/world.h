@@ -24,6 +24,7 @@ namespace MorningRitual
 			
 			World();
 			void setup();
-			void loadFile(std::string levelname);
+			void load(std::string levelname);
+			std::string loadFile(std::string filename);
 	};
 }
