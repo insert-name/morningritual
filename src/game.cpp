@@ -114,7 +114,18 @@ namespace MorningRitual
 				return sf::Vector2u(0, 0);
 				break;
 			case CellType::FLOOR:
-				return sf::Vector2u(64, 0);
+				switch (cell->variant)
+				{
+					case 0:
+						return sf::Vector2u(64, 0);
+						break;
+					case 1:
+						return sf::Vector2u(64, 128);
+						break;
+					default:
+						return sf::Vector2u(0, 0);
+						break;
+				}
 				break;
 			case CellType::FURNITURE:
 				switch (cell->variant)

@@ -32,6 +32,9 @@ namespace MorningRitual
 			case '.':
 				this->set(x, y, Cell(CellType::FLOOR, 0, false, 0));
 				break;
+			case '~':
+				this->set(x, y, Cell(CellType::FLOOR, 1, false, 0));
+				break;
 			case '+':
 				this->set(x, y, Cell(CellType::DOOR, 0, true, 0));
 				break;
