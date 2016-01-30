@@ -12,6 +12,13 @@ namespace MorningRitual
 		NOTIFICATION = 0,
 	};
 	
+	enum MusicType
+	{
+		MAIN_GAMEPLAY,
+		PANIC_1,
+		PANIC_2,
+	};
+	
 	class SoundManager
 	{
 		public:
@@ -20,10 +27,13 @@ namespace MorningRitual
 			sf::SoundBuffer sound_buffers[10];
 			sf::Sound sounds[10];
 			
+			sf::Music musics[10];
+			
 			
 			SoundManager();
 			void setup();
-			void play(SoundType type);
+			void playSound(SoundType type);
+			void playMusic(MusicType type);
 	};
 }
 

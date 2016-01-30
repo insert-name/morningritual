@@ -132,11 +132,11 @@ namespace MorningRitual
 			{
 				Cell* cell = visible_layer->get(i, j);
 				
-				sf::Vector2u pos = this->getTileRectangle(cell);
+				sf::Vector2u pos = this->getTileRectangle(cell) * (unsigned int)64;
 				tile.setTextureRect(sf::IntRect(pos.x, pos.y, 64, 64));
 				tile.setPosition(sf::Vector2f(64.0f * i, 64.0f * j));
 		
-				if (cell->type != CellType::EMPTY)
+				if (cell->type != CellType::CT_EMPTY)
 					this->window.draw(tile);
 			}
 		}
@@ -198,57 +198,57 @@ namespace MorningRitual
 	{
 		switch(cell->type)
 		{
-			case CellType::EMPTY:
+			case CellType::CT_EMPTY:
 				return sf::Vector2u(0, 0);
 				break;
-			case CellType::FLOOR:
+			case CellType::CT_FLOOR:
 				switch (cell->variant)
 				{
 					case 0:
-						return sf::Vector2u(64, 0);
+						return sf::Vector2u(1, 0);
 						break;
 					case 1:
-						return sf::Vector2u(64, 128);
+						return sf::Vector2u(1, 2);
 						break;
 					default:
 						return sf::Vector2u(0, 0);
 						break;
 				}
 				break;
-			case CellType::FURNITURE:
+			case CellType::CT_FURNITURE:
 				switch (cell->variant)
 				{
 					case 0:
-						return sf::Vector2u(64, 64);
+						return sf::Vector2u(1, 1);
 						break;
 					case 1:
-						return sf::Vector2u(448, 64);
+						return sf::Vector2u(7, 1);
 						break;
 					case 2:
-						return sf::Vector2u(128, 256);
+						return sf::Vector2u(2, 4);
 						break;
 					case 3:
-						return sf::Vector2u(0, 192);
+						return sf::Vector2u(0, 3);
 						break;
 					case 4:
-						return sf::Vector2u(192, 64);
+						return sf::Vector2u(3, 1);
 						break;
 					default:
 						return sf::Vector2u(0, 0);
 						break;
 				}
 				break;
-			case CellType::DOOR:
-				return sf::Vector2u(448, 0);
+			case CellType::CT_DOOR:
+				return sf::Vector2u(7, 0);
 				break;
-			case CellType::WALL:
-				return sf::Vector2u(128, 0);
+			case CellType::CT_WALL:
+				return sf::Vector2u(2, 0);
 				break;
-			case CellType::UPSTAIR:
-				return sf::Vector2u(0, 64);
+			case CellType::CT_UPSTAIR:
+				return sf::Vector2u(0, 1);
 				break;
-			case CellType::DOWNSTAIR:
-				return sf::Vector2u(0, 128);
+			case CellType::CT_DOWNSTAIR:
+				return sf::Vector2u(0, 2);
 				break;
 			default:
 				return sf::Vector2u(0, 0);

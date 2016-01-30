@@ -5,13 +5,19 @@ namespace MorningRitual
 {
 	enum CellType
 	{
-		EMPTY,
-		FLOOR,
-		WALL,
-		FURNITURE,
-		DOOR,
-		UPSTAIR,
-		DOWNSTAIR,
+		CT_EMPTY = 0,
+		CT_FLOOR = 1,
+		CT_WALL = 2,
+		CT_FURNITURE = 3,
+		CT_DOOR = 4,
+		CT_UPSTAIR = 5,
+		CT_DOWNSTAIR = 6,
+	};
+	
+	enum CellVariant
+	{
+		CV_EMPTY = 0,
+		
 	};
 	
 	struct Cell
@@ -24,7 +30,7 @@ namespace MorningRitual
 			
 			Cell()
 			{
-				this->type = CellType::EMPTY;
+				this->type = CellType::CT_EMPTY;
 				this->variant = 0;
 				this->solid = true;
 				this->state = 0;
