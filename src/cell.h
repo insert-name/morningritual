@@ -2,6 +2,7 @@ namespace MorningRitual
 {
 	enum CellType
 	{
+		EMPTY,
 		FLOOR,
 		WALL,
 		FURNITURE,

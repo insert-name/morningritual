@@ -1,4 +1,5 @@
 #include "vector"
+#include "string"
 
 #include "cell.h"
 
@@ -19,8 +20,10 @@ namespace MorningRitual
 		public:
 			int depth = 2;
 			std::vector<Layer> layers;
+			std::string level_directory = "levels";
 			
 			World();
 			void setup();
+			void loadFile(std::string levelname);
 	};
 }

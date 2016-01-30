@@ -1,4 +1,7 @@
 #include "stdio.h"
+#include "iostream"
+#include "sstream"
+#include "fstream"
 
 #include "world.h"
 
@@ -24,6 +27,7 @@ namespace MorningRitual
 		printf("Created world\n");
 		
 		this->setup();
+		this->loadFile("0");
 	}
 	
 	void World::setup()
@@ -38,5 +42,19 @@ namespace MorningRitual
 		}
 		
 		printf("Created a world of depth %d\n", this->depth);
+	}
+	
+	void World::loadFile(std::string levelname)
+	{
+		std::ifstream file;
+		file.open((this->level_directory + "/lvl_" + levelname + "_root.txt").c_str());
+		std::stringstream buffer;
+		buffer << file.rdbuf();
+		
+		std::string data = buffer.str();
+		
+		printf(("The contents of the level file " + levelname + " is:\n" + data).c_str());
+		
+		
 	}
 }

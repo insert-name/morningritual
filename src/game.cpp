@@ -9,6 +9,8 @@ namespace MorningRitual
 		printf("Created game\n");
 		
 		this->window.create(sf::VideoMode(800, 600), "Morning Ritual");
+		
+		printf("Created window of size %dx%d\n", this->window.getSize().x, this->window.getSize().y);
 	}
 	
 	void Game::run()
