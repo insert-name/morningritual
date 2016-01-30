@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "SFML/Graphics.hpp"
+#include "glm/glm.hpp"
 
 #include "world.h"
 #include "gui.h"
@@ -9,6 +10,13 @@
 
 namespace MorningRitual
 {
+	enum ViewState
+	{
+		FREE,
+		MOVETO,
+		LOCKED,
+	};
+	
 	class Game
 	{
 		public:
@@ -16,8 +24,11 @@ namespace MorningRitual
 			
 			sf::View view;
 			sf::Vector2f view_velocity;
+			sf::Vector2f view_target;
+			ViewState view_state = ViewState::FREE;
 			
 			sf::Texture tileset;
+			sf::Font mainfont;
 			
 			World world;
 			int current_layer = 0;
@@ -32,7 +43,12 @@ namespace MorningRitual
 			void run();
 			void draw();
 			void drawEntities();
+			void drawGUI();
 			sf::Vector2u getTileRectangle(Cell* cell);
+			
+			void mouseClick(sf::Event event);
+			
+			void moveTo(glm::ivec3 pos);
 	};
 }
 

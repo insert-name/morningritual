@@ -7,6 +7,7 @@
 
 #include "world.h"
 #include "common.h"
+#include "game.h"
 
 namespace MorningRitual
 {	
@@ -26,11 +27,11 @@ namespace MorningRitual
 		this->entities.back().path = this->findPath(glm::ivec3(3, 1, 0), glm::ivec3(40, 7, 1));
 	}
 	
-	void World::tick()
+	void World::tick(Game* game)
 	{
 		for (int i = 0; i < this->entities.size(); i ++)
 		{
-			entities[i].tick();
+			entities[i].tick(game);
 		}
 	}
 	

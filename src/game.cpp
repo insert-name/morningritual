@@ -20,7 +20,7 @@ namespace MorningRitual
 		
 		printf("Created view\n");
 		
-		this->tileset.loadFromFile("../data/tiles/tileTest3.png");
+		this->tileset.loadFromFile(this->data_directory + "/tiles/tileTest3.png");
 		
 		printf("Opened tileset\n");
 		
@@ -35,6 +35,9 @@ namespace MorningRitual
 		//Setup GUI
 		this->gui.data_directory = this->data_directory;
 		this->gui.setup();
+		
+		//Find the right font
+		this->mainfont.loadFromFile(this->data_directory + "/fonts/ENYO_Serif_light.ttf");
 	}
 	
 	void Game::run()
@@ -59,25 +62,46 @@ namespace MorningRitual
 							this->current_layer = std::min(this->world.depth - 1, std::max(0, this->current_layer - 1));
 						break;
 					
+					case sf::Event::MouseButtonPressed:
+						this->mouseClick(event);
+						break;
+					
 					default:
 						break;
 				}
 			}
 			
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				this->view_velocity.x -= 2.0f;
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-				this->view_velocity.x += 2.0f;
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				this->view_velocity.y -= 2.0f;
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				this->view_velocity.y += 2.0f;
+			if (this->view_state == ViewState::FREE)
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+					this->view_velocity.x -= 2.0f;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+					this->view_velocity.x += 2.0f;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+					this->view_velocity.y -= 2.0f;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+					this->view_velocity.y += 2.0f;
 			
-			this->view_velocity.x = std::min(16.0f, std::max(-16.0f, this->view_velocity.x));
-			this->view_velocity.y = std::min(16.0f, std::max(-16.0f, this->view_velocity.y));
+				this->view_velocity.x = std::min(16.0f, std::max(-16.0f, this->view_velocity.x));
+				this->view_velocity.y = std::min(16.0f, std::max(-16.0f, this->view_velocity.y));
 			
-			this->view_velocity.x -= sign(this->view_velocity.x);
-			this->view_velocity.y -= sign(this->view_velocity.y);
+				this->view_velocity.x -= sign(this->view_velocity.x);
+				this->view_velocity.y -= sign(this->view_velocity.y);
+				
+				if (std::sqrt(this->view_velocity.x * this->view_velocity.x + this->view_velocity.y * this->view_velocity.y) < 0.5f)
+					this->view_velocity = sf::Vector2f(0.0f, 0.0f);
+			}
+			else if (this->view_state == ViewState::MOVETO)
+			{
+				sf::Vector2f offset = this->view_target - this->view.getCenter();
+				
+				this->view_velocity = offset * 0.05f;
+				
+				if (std::sqrt(offset.x * offset.x + offset.y * offset.y) < 4.0f)
+				{
+					this->view_state = ViewState::FREE;
+				}
+			}
 			
 			sf::Vector2f current_viewpos = this->view.getCenter();
 			current_viewpos += this->view_velocity;
@@ -87,7 +111,10 @@ namespace MorningRitual
 			this->window.setView(this->view);
 			
 			//Tick the world
-			this->world.tick();
+			this->world.tick(this);
+			
+			//Tick the GUI
+			this->gui.tick();
 			
 			this->draw();
 		}
@@ -120,6 +147,8 @@ namespace MorningRitual
 		
 		this->drawEntities();
 		
+		this->drawGUI();
+		
 		this->window.display();
 	}
 	
@@ -140,7 +169,32 @@ namespace MorningRitual
 			//tile2.setPosition(sf::Vector2f());
 			
 			if (entity.pos.z == this->current_layer)
-				window.draw(tile);
+				this->window.draw(tile);
+		}
+	}
+	
+	void Game::drawGUI()
+	{
+		for (int i = 0; i < this->gui.notification_widgets.size(); i ++)
+		{
+			Widget* widget = &this->gui.notification_widgets[i];
+			
+			sf::Sprite component;
+			component.setTexture(widget->texture);
+			component.setPosition(this->view.getCenter() - this->view.getSize() / 2.0f + widget->position);
+			component.setColor(sf::Color(255, 255, 255, widget->alpha));
+			
+			this->window.draw(component);
+			
+			sf::Text message;
+			message.setPosition(sf::Vector2f(widget->position.x + 16, widget->position.y + 8));
+			message.setFont(this->mainfont);
+			message.setString(widget->message);
+			message.setCharacterSize(32);
+			message.setStyle(sf::Text::Bold);
+			message.setColor(sf::Color::Black);
+			
+			window.draw(message);
 		}
 	}
 	
@@ -204,5 +258,43 @@ namespace MorningRitual
 				return sf::Vector2u(0, 0);
 				break;
 		}
+	}
+	
+	void Game::mouseClick(sf::Event event)
+	{
+		switch (event.mouseButton.button)
+		{
+			case sf::Mouse::Button::Left:
+				
+				printf("Left click mouse event at %d, %d\n", event.mouseButton.x, event.mouseButton.y);
+				
+				//Check for GUI first
+				for (int i = 0; i < this->gui.notification_widgets.size(); i ++)
+				{
+					Widget* widget = &this->gui.notification_widgets[i];
+					
+					if (event.mouseButton.x > widget->position.x && event.mouseButton.y > widget->position.y)
+					{
+						if (event.mouseButton.x < widget->position.x + widget->texture.getSize().x && event.mouseButton.y < widget->position.y + widget->texture.getSize().y)
+						{
+							printf("Mouse click hit widget\n");
+							
+							widget->click(this);
+						}
+					}
+				}
+				
+				break;
+			
+			default:
+				break;
+		}
+	}
+	
+	void Game::moveTo(glm::ivec3 pos)
+	{
+		this->current_layer = pos.z;
+		this->view_target = sf::Vector2f(pos.x, pos.y) * 64.0f;
+		this->view_state = ViewState::MOVETO;
 	}
 }

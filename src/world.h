@@ -43,7 +43,7 @@ namespace MorningRitual
 			
 			World();
 			void setup();
-			void tick();
+			void tick(Game* game);
 			void load(std::string levelname);
 			std::string loadFile(std::string filename);
 			void addLayer(int w, int h, std::string data);
