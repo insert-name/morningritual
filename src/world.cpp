@@ -2,8 +2,10 @@
 #include "iostream"
 #include "sstream"
 #include "fstream"
+#include "string"
 
 #include "world.h"
+#include "common.h"
 
 namespace MorningRitual
 {
@@ -48,9 +50,25 @@ namespace MorningRitual
 	{
 		std::string data = this->loadFile(this->level_directory + "/lvl_" + levelname + "_root.txt");
 		
-		printf(("The contents of the level file " + levelname + " is:\n" + data).c_str());
+		//printf(("The contents of the level file " + levelname + " is:\n" + data).c_str());
 		
+		std::vector<std::string> values = split(data, '\n');
 		
+		this->name = values[0];
+		int w = std::stoi(values[1]);
+		int h = std::stoi(values[2]);
+		this->depth = std::stoi(values[3]);
+		
+		for (int i = 0; i < this->depth; i ++)
+		{
+			this->addLayer(w, h, values[4 + i]);
+		}
+		
+	}
+	
+	void World::addLayer(int w, int h, std::string data)
+	{
+		printf("Loading layer of size %dx%d\n", w, h);
 	}
 	
 	std::string World::loadFile(std::string filename)
