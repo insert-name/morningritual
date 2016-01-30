@@ -32,3 +32,11 @@
 's' = sink
 'w' = wardrobe 
 'M' = mirror 
+'c' =Cleaning utensils
+'*' = coat rack
+'b' = bean bag 
+'[' = desk 
+'f' = filing cabinet
+'k' = bookcase
+'g' = console game tile
+
