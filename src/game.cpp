@@ -264,6 +264,8 @@ namespace MorningRitual
 				
 				printf("Left click mouse event at %d, %d\n", event.mouseButton.x, event.mouseButton.y);
 				
+				bool caught_event = false;
+				
 				//Check for GUI first
 				for (int i = 0; i < this->gui.notification_widgets.size(); i ++)
 				{
@@ -275,14 +277,28 @@ namespace MorningRitual
 						{
 							printf("Mouse click hit widget\n");
 							
+							caught_event = true;
+							
 							widget->click(this);
 						}
 					}
 				}
 				
-				break;
-			
-			default:
+				if (!caught_event)
+				{
+					//Check cells
+					glm::ivec2 click_pos;
+					
+					click_pos.x = (event.mouseButton.x + this->view.getCenter().x - this->view.getSize().x / 2.0f) / 64;
+					click_pos.y = (event.mouseButton.y + this->view.getCenter().y - this->view.getSize().y / 2.0f) / 64;
+					
+					if (click_pos.x >= 0 && click_pos.y >= 0 && click_pos.x < this->world.layers[this->current_layer].w && click_pos.y < this->world.layers[this->current_layer].h)
+					{
+						//It's inside the world
+						this->world.layers[this->current_layer].get(click_pos.x, click_pos.y)->click(&this->world);
+					}
+				}
+				
 				break;
 		}
 	}

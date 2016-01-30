@@ -3,6 +3,8 @@
 
 namespace MorningRitual
 {
+	class World;
+	
 	enum CellType
 	{
 		CT_EMPTY = 0,
@@ -44,10 +46,9 @@ namespace MorningRitual
 				this->state = state;
 			}
 			
-			bool isSolid()
-			{
-				return this->solid;
-			}
+			bool isSolid();
+			
+			void click(World* world);
 	};
 }
 
