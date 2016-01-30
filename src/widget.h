@@ -10,7 +10,10 @@ namespace MorningRitual
 		public:
 			sf::Vector2f position;
 			int lifetime = 0;
-			sf::Texture tex;
+			int alpha = 255;
+			sf::Texture texture;
+			
+			void tick();
 	};
 }
 

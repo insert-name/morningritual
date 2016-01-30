@@ -23,6 +23,18 @@ namespace MorningRitual
 		this->tileset.loadFromFile("../data/tiles/tileTest3.png");
 		
 		printf("Opened tileset\n");
+		
+		//Setup world
+		this->world.data_directory = this->data_directory;
+		this->world.setup();
+		
+		//Setup sound manager
+		this->sound_manager.data_directory = this->data_directory;
+		this->sound_manager.setup();
+		
+		//Setup GUI
+		this->gui.data_directory = this->data_directory;
+		this->gui.setup();
 	}
 	
 	void Game::run()

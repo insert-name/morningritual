@@ -13,18 +13,17 @@ namespace MorningRitual
 	World::World()
 	{
 		printf("Created world\n");
-		
-		this->setup();
-		this->load("Level 1");
-		
-		this->entities.push_back(Entity());
-		this->entities.back().pos = glm::ivec3(3, 1, 0);
-		this->entities.back().path = this->findPath(glm::ivec3(3, 1, 0), glm::ivec3(40, 7, 1));
 	}
 	
 	void World::setup()
 	{
 		this->layers.clear();
+		
+		this->load("Level 1");
+		
+		this->entities.push_back(Entity());
+		this->entities.back().pos = glm::ivec3(3, 1, 0);
+		this->entities.back().path = this->findPath(glm::ivec3(3, 1, 0), glm::ivec3(40, 7, 1));
 	}
 	
 	void World::tick()
@@ -37,7 +36,7 @@ namespace MorningRitual
 	
 	void World::load(std::string levelname)
 	{
-		std::string data = this->loadFile(this->level_directory + "/" + levelname + "/lvl_0_root.txt");
+		std::string data = this->loadFile(this->data_directory + "/levels/" + levelname + "/lvl_0_root.txt");
 		
 		//printf(("The contents of the level file " + levelname + " is:\n" + data).c_str());
 		
@@ -50,7 +49,7 @@ namespace MorningRitual
 		
 		for (int i = 0; i < this->depth; i ++)
 		{
-			this->addLayer(w, h, this->loadFile(this->level_directory + "/" + levelname + "/" + values[4 + i]));
+			this->addLayer(w, h, this->loadFile(this->data_directory + "/levels/" + levelname + "/" + values[4 + i]));
 		}
 		
 	}

@@ -8,4 +8,10 @@ namespace MorningRitual
 	{
 		printf("Created GUI\n");
 	}
+	
+	void GUI::setup()
+	{
+		this->widgets.push_back(Widget());
+		this->widgets.back().texture.loadFromFile(this->data_directory + "/GUI/notification.png");
+	}
 }

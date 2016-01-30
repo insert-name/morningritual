@@ -10,7 +10,10 @@ namespace MorningRitual
 		public:
 			std::vector<Widget> widgets;
 			
+			std::string data_directory;
+			
 			GUI();
+			void setup();
 	};
 }
 

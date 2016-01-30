@@ -5,6 +5,7 @@
 
 #include "world.h"
 #include "gui.h"
+#include "soundmanager.h"
 
 namespace MorningRitual
 {
@@ -22,6 +23,9 @@ namespace MorningRitual
 			int current_layer = 0;
 			
 			GUI gui;
+			SoundManager sound_manager;
+			
+			std::string data_directory = "../data";
 			
 			Game();
 			

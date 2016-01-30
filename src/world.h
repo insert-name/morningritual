@@ -37,7 +37,7 @@ namespace MorningRitual
 			std::string name = "None";
 			int depth = 0;
 			std::vector<Layer> layers;
-			std::string level_directory = "../data/levels";
+			std::string data_directory;
 			
 			std::vector<Entity> entities;
 			
