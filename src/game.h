@@ -11,6 +11,7 @@ namespace MorningRitual
 	{
 		public:
 			sf::RenderWindow window;
+			sf::View view;
 			
 			World world;
 			Game();
