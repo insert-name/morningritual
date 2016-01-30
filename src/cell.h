@@ -20,7 +20,23 @@ namespace MorningRitual
 			CellType type;
 			int variant;
 			bool solid;
-			int state;	
+			int state;
+			
+			Cell()
+			{
+				this->type = CellType::EMPTY;
+				this->variant = 0;
+				this->solid = false;
+				this->state = 0;
+			}
+			
+			Cell(CellType type, int variant, bool solid, int state)
+			{
+				this->type = type;
+				this->variant = variant;
+				this->solid = solid;
+				this->state = state;
+			}
 	};
 }
 

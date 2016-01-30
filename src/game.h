@@ -11,13 +11,19 @@ namespace MorningRitual
 	{
 		public:
 			sf::RenderWindow window;
+			
 			sf::View view;
+			sf::Vector2f view_velocity;
+			
+			sf::Texture tileset;
 			
 			World world;
+			int current_layer = 0;
 			Game();
 			
 			void run();
 			void draw();
+			sf::Vector2u getTileRectangle(Cell* cell);
 	};
 }
 

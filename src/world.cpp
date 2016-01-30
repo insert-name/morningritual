@@ -21,13 +21,6 @@ namespace MorningRitual
 	{
 		this->layers.clear();
 		
-		for (int i = 0; i < this->depth; i ++)
-		{
-			this->layers.push_back(Layer());
-			
-			this->layers.back().setup();
-		}
-		
 		printf("Created a world of depth %d\n", this->depth);
 	}
 	

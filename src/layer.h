@@ -18,6 +18,7 @@ namespace MorningRitual
 			void setup();
 			void set(int x, int y, char cell);
 			void set(int x, int y, Cell cell);
+			Cell* get(int x, int y);
 	};
 }
 

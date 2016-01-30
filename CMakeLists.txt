@@ -28,6 +28,7 @@ src/main.cpp
 src/game.cpp
 src/world.cpp
 src/layer.cpp
+src/common.cpp
 )
 
 #Take the code and turn it into the executable
