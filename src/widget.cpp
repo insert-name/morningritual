@@ -7,6 +7,9 @@ namespace MorningRitual
 	{
 		this->lifetime --;
 		
+		if (this->startlife < 0)
+			this->startlife = this->lifetime;
+		
 		if (this->lifetime < 60 && lifetime > 0)
 		{
 			this->alpha = (255 * lifetime) / 60;
@@ -14,6 +17,9 @@ namespace MorningRitual
 		}
 		else
 			this->alpha = 255;
+		
+		if (this->lifetime > this->startlife - 60)
+			this->alpha = (255 * (this->startlife - this->lifetime)) / 60;
 	}
 	
 	void Widget::click(Game* game)

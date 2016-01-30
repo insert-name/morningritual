@@ -28,7 +28,7 @@ namespace MorningRitual
 		{
 			if (this->notification_widgets[i].lifetime <= 0)
 			{
-				printf("DELETED\n");
+				printf("Deleted notification widget\n");
 				this->notification_widgets[i] = this->notification_widgets.back();
 				this->notification_widgets.pop_back();
 			}

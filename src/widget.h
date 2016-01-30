@@ -13,6 +13,7 @@ namespace MorningRitual
 		public:
 			sf::Vector2f position;
 			int lifetime = 0;
+			int startlife = -1;
 			int alpha = 255;
 			sf::Texture texture;
 			std::string message = "NONE";
