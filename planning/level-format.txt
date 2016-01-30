@@ -60,7 +60,15 @@
 'f' = filing cabinet
 'k' = bookcase
 'g' = console game tile
+<<<<<<< HEAD
 
 
 '<' = Upstair
 '>' = Downstair
+=======
+<<<<<<< HEAD
+'h' = chair
+'F' = fridge 
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master

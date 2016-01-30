@@ -31,6 +31,7 @@ namespace MorningRitual
 	void SoundManager::playMusic(MusicType type)
 	{
 		this->musics[type].play();
+		this->musics[type].setLoop(true);
 		
 		printf("Playing music\n");
 	}
