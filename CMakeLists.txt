@@ -27,6 +27,7 @@ set(SOURCE_FILES
 src/main.cpp
 src/game.cpp
 src/world.cpp
+src/layer.cpp
 )
 
 #Take the code and turn it into the executable

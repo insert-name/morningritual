@@ -1,20 +1,13 @@
+#ifndef WORLD_H
+#define WORLD_H
+
 #include "vector"
 #include "string"
 
-#include "cell.h"
+#include "layer.h"
 
 namespace MorningRitual
 {
-	struct Layer
-	{
-		public:
-			int w = 16;
-			int h = 16;
-			std::vector<Cell> cells;
-			
-			void setup();
-	};
-	
 	class World
 	{
 		public:
@@ -30,3 +23,5 @@ namespace MorningRitual
 			void addLayer(int w, int h, std::string data);
 	};
 }
+
+#endif

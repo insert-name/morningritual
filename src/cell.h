@@ -1,3 +1,6 @@
+#ifndef CELL_H
+#define CELL_H
+
 namespace MorningRitual
 {
 	enum CellType
@@ -20,3 +23,5 @@ namespace MorningRitual
 			int state;	
 	};
 }
+
+#endif

@@ -8,22 +8,7 @@
 #include "common.h"
 
 namespace MorningRitual
-{
-	void Layer::setup()
-	{
-		this->cells.clear();
-		
-		for (int i = 0; i < this->w; i ++)
-		{
-			for (int j = 0; j < this->h; j ++)
-			{
-				this->cells.push_back(Cell());
-			}
-		}
-		
-		printf("Created a layer of size %dx%d\n", this->w, this->h);
-	}
-	
+{	
 	World::World()
 	{
 		printf("Created world\n");
@@ -61,14 +46,32 @@ namespace MorningRitual
 		
 		for (int i = 0; i < this->depth; i ++)
 		{
-			this->addLayer(w, h, values[4 + i]);
+			this->addLayer(w, h, this->loadFile(this->level_directory + "/" + values[4 + i]));
 		}
 		
 	}
 	
 	void World::addLayer(int w, int h, std::string data)
 	{
+		this->layers.push_back(Layer());
+		
+		this->layers.back().w = w;
+		this->layers.back().h = h;
+		this->layers.back().setup();
+		
 		printf("Loading layer of size %dx%d\n", w, h);
+		
+		std::vector<std::string> rows = split(data, '\n');
+		
+		for (int j = 0; j < rows.size(); j ++)
+		{
+			for (int i = 0; i < rows[j].size(); i ++)
+			{
+				this->layers.back().set(i, j, rows[j][i]);
+			}
+			
+			printf("Added layer row beginning with %c\n", rows[j][0]);
+		}
 	}
 	
 	std::string World::loadFile(std::string filename)
