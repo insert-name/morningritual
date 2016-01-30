@@ -19,3 +19,16 @@
 'O' = Oven
 'T' = Toilet
 't' = Table
+'W' = washing machine 
+'S' = sofa
+'C' = car
+'B' = bed
+'v' = T.V.
+'{' = left bath
+'}' = right bath 
+'~' = rug
+'0' = pillow 
+'D' = quilt
+'s' = sink
+'w' = wardrobe 
+'M' = mirror 
