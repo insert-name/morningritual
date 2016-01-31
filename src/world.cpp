@@ -125,7 +125,7 @@ namespace MorningRitual
 		
 		if (net <= 1)
 		{
-			if (this->get(p2)->isSolid())
+			if (this->get(p2)->getSolid())
 				return false;
 			else
 				return true;
@@ -258,7 +258,7 @@ namespace MorningRitual
 		
 		for (glm::ivec3 place : locals)
 		{
-			if (!this->get(place)->isSolid())
+			if (!this->get(place)->getSolid())
 				return place;
 		}
 		

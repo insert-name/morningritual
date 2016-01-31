@@ -21,7 +21,7 @@ namespace MorningRitual
 		
 		printf("Created view\n");
 		
-		this->tileset.loadFromFile(this->data_directory + "/tiles/tileTest3.png");
+		this->tileset.loadFromFile(this->data_directory + "/tiles/tileSet1-01.png");
 		
 		printf("Opened tileset\n");
 		
@@ -150,8 +150,7 @@ namespace MorningRitual
 				tile.setTextureRect(sf::IntRect(pos.x, pos.y, 64, 64));
 				tile.setPosition(sf::Vector2f(64.0f * i, 64.0f * j));
 		
-				if (cell->id != CellType::CT_EMPTY)
-					this->window.draw(tile);
+				this->window.draw(tile);
 			}
 		}
 		
@@ -169,7 +168,7 @@ namespace MorningRitual
 			sf::Sprite tile;
 			tile.setTexture(this->tileset);
 			
-			tile.setTextureRect(sf::IntRect(3 * 64, 4 * 64, 64, 64));
+			tile.setTextureRect(sf::IntRect(8 * 64, 10 * 64, 64, 64));
 			tile.setPosition(sf::Vector2f(entity.pos.x * 64, entity.pos.y * 64));
 			
 			sf::RectangleShape tile2;
@@ -265,7 +264,7 @@ namespace MorningRitual
 				return sf::Vector2u(0, 2);
 				break;*/
 			default:
-				return sf::Vector2u(0, 0);
+				return cell->getTexCoords();
 				break;
 		}
 	}

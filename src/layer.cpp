@@ -26,44 +26,8 @@ namespace MorningRitual
 	{
 		switch (cell)
 		{
-			case '#':
-				this->set(x, y, Cell(CellType::CT_WALL_X, 0));
-				break;
-			case '.':
-				this->set(x, y, Cell(CellType::CT_WOOD_FLOOR, 0));
-				break;
-			case '~':
-				this->set(x, y, Cell(CellType::CT_CARPET_FLOOR, 0));
-				break;
-			case '+':
-				this->set(x, y, Cell(CellType::CT_DOOR_CLOSED, 0));
-				break;
-			case 't':
-				this->set(x, y, Cell(CellType::CT_TABLE, 0));
-				break;
-			case 'T':
-				this->set(x, y, Cell(CellType::CT_L_TOILET, 0));
-				break;
-			case 'W':
-				this->set(x, y, Cell(CellType::CT_K_WCHINE, 0));
-				break;
-			case 'O':
-				this->set(x, y, Cell(CellType::CT_K_OVEN, 0));
-				break;
-			case 's':
-				this->set(x, y, Cell(CellType::CT_L_SINK, 0));
-				break;
-			case '<':
-				this->set(x, y, Cell(CellType::CT_UPSTAIR, 0));
-				break;
-			case '>':
-				this->set(x, y, Cell(CellType::CT_DOWNSTAIR, 0));
-				break;
-			case ' ':
-				this->set(x, y, Cell());
-				break;
 			default:
-				this->set(x, y, Cell());
+				this->set(x, y, Cell((CellType)cell, 0));
 				break;
 		}
 	}
