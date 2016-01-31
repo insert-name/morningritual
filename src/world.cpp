@@ -21,6 +21,7 @@ namespace MorningRitual
 		this->layers.clear();
 		
 		this->load("Level 1");
+		this->rotafyCells();
 		
 		this->entities.push_back(Entity());
 		this->entities.back().pos = glm::ivec3(3, 1, 0);
@@ -53,6 +54,25 @@ namespace MorningRitual
 			this->addLayer(w, h, this->loadFile(this->data_directory + "/levels/" + levelname + "/" + values[4 + i]));
 		}
 		
+	}
+	
+	void World::rotafyCells()
+	{
+		for (int z = 0; z < this->depth; z ++)
+		{
+			for (int x = 0; x < this->layers[z].w; x ++)
+			{
+				for (int y = 0; y < this->layers[z].h; y ++)
+				{
+					this->get(glm::ivec3(x, y, z))->self_mask = this->getCellRotationMask(glm::ivec3(x, y, z), (CellType)this->get(glm::ivec3(x, y, z))->id, 1);
+					this->get(glm::ivec3(x, y, z))->solid_mask = this->getCellRotationMask(glm::ivec3(x, y, z), (CellType)this->get(glm::ivec3(x, y, z))->id, 0);
+					this->get(glm::ivec3(x, y, z))->wall_mask = this->getCellRotationMask(glm::ivec3(x, y, z), (CellType)this->get(glm::ivec3(x, y, z))->id, 2);
+					this->get(glm::ivec3(x, y, z))->furniture_mask = this->getCellRotationMask(glm::ivec3(x, y, z), (CellType)this->get(glm::ivec3(x, y, z))->id, 3);
+				}
+			}
+		}
+		
+		printf("Rotafied world\n");
 	}
 	
 	void World::addLayer(int w, int h, std::string data)
@@ -173,12 +193,12 @@ namespace MorningRitual
 				{
 					if (this->canTraverse(open_set.front().pos, pos))
 					{
-						printf("Can traverse to %d,%d,%d\n", pos.x, pos.y, pos.z);
+						//printf("Can traverse to %d,%d,%d\n", pos.x, pos.y, pos.z);
 						
 						if (!dequeContains<PathPoint>(open_set, PathPoint(pos, 0)) && !dequeContains<PathPoint>(closed_set, PathPoint(pos, 0)))
 							open_set.push_back(PathPoint(pos, open_set.front().difficulty + 1));
 					
-						printf("Point %d,%d,%d\n", pos.x, pos.y, pos.z);
+						//printf("Point %d,%d,%d\n", pos.x, pos.y, pos.z);
 						
 						if (pos == p2)
 						{
@@ -188,7 +208,7 @@ namespace MorningRitual
 					}
 					else
 					{
-						printf("Cannot traverse to %d,%d,%d\n", pos.x, pos.y, pos.z);
+						//printf("Cannot traverse to %d,%d,%d\n", pos.x, pos.y, pos.z);
 					}
 				}
 				
@@ -263,5 +283,83 @@ namespace MorningRitual
 		}
 		
 		return glm::ivec3(-1, -1, -1);
+	}
+	
+	CellType World::getCellTypeAt(glm::ivec3 pos)
+	{
+		if (pos.z < 0 || pos.z >= this->depth)
+			return CellType::CT_EMPTY;
+		
+		if (pos.x < 0 || pos.y < 0 || pos.x >= this->layers[pos.z].w || pos.y >= this->layers[pos.z].h)
+			return CellType::CT_EMPTY;
+		
+		return (CellType)this->get(pos)->id;
+	}
+	
+	int World::getCellRotationMask(glm::ivec3 pos, CellType type, int all_solid)
+	{
+		int mask = 0;
+		
+		if (all_solid == 0)
+		{
+			if (Cell(this->getCellTypeAt(pos + glm::ivec3(1, 0, 0)), 0).getSolid())
+				mask |= 1;
+			if (Cell(this->getCellTypeAt(pos + glm::ivec3(0, -1, 0)), 0).getSolid())
+				mask |= 2;
+			if (Cell(this->getCellTypeAt(pos + glm::ivec3(-1, 0, 0)), 0).getSolid())
+				mask |= 4;
+			if (Cell(this->getCellTypeAt(pos + glm::ivec3(0, 1, 0)), 0).getSolid())
+				mask |= 8;
+		}
+		else if (all_solid == 1)
+		{
+			if (this->getCellTypeAt(pos + glm::ivec3(1, 0, 0)) == type)
+				mask |= 1;
+			if (this->getCellTypeAt(pos + glm::ivec3(0, -1, 0)) == type)
+				mask |= 2;
+			if (this->getCellTypeAt(pos + glm::ivec3(-1, 0, 0)) == type)
+				mask |= 4;
+			if (this->getCellTypeAt(pos + glm::ivec3(0, 1, 0)) == type)
+				mask |= 8;
+		}
+		else if (all_solid == 2)
+		{
+			CellGenericType a = Cell(this->getCellTypeAt(pos + glm::ivec3(1, 0, 0)), 0).getGenericType();
+			if (a == CellGenericType::CGT_WALL || a == CellGenericType::CGT_DOOR)
+				mask |= 1;
+			
+			a = Cell(this->getCellTypeAt(pos + glm::ivec3(0, -1, 0)), 0).getGenericType();
+			if (a == CellGenericType::CGT_WALL || a == CellGenericType::CGT_DOOR)
+				mask |= 2;
+			
+			a = Cell(this->getCellTypeAt(pos + glm::ivec3(-1, 0, 0)), 0).getGenericType();
+			if (a == CellGenericType::CGT_WALL || a == CellGenericType::CGT_DOOR)
+				mask |= 4;
+			
+			a = Cell(this->getCellTypeAt(pos + glm::ivec3(0, 1, 0)), 0).getGenericType();
+			if (a == CellGenericType::CGT_WALL || a == CellGenericType::CGT_DOOR)
+				mask |= 8;
+		}
+		
+		else if (all_solid == 3)
+		{
+			CellGenericType a = Cell(this->getCellTypeAt(pos + glm::ivec3(1, 0, 0)), 0).getGenericType();
+			if (a == CellGenericType::CGT_FURNITURE)
+				mask |= 1;
+			
+			a = Cell(this->getCellTypeAt(pos + glm::ivec3(0, -1, 0)), 0).getGenericType();
+			if (a == CellGenericType::CGT_FURNITURE)
+				mask |= 2;
+			
+			a = Cell(this->getCellTypeAt(pos + glm::ivec3(-1, 0, 0)), 0).getGenericType();
+			if (a == CellGenericType::CGT_FURNITURE)
+				mask |= 4;
+			
+			a = Cell(this->getCellTypeAt(pos + glm::ivec3(0, 1, 0)), 0).getGenericType();
+			if (a == CellGenericType::CGT_FURNITURE)
+				mask |= 8;
+		}
+		
+		return mask;
 	}
 }

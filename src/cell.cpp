@@ -9,9 +9,13 @@ namespace MorningRitual
 	{
 		printf("Clicked cell\n");
 		
-		if (this->getGenericType() == CellGenericType::CGT_DOOR)
+		if (this->id == CellType::CT_DOOR_CLOSED)
 		{
-			this->id = CellType::CT_WOOD_FLOOR;
+			this->id = CellType::CT_DOOR_OPEN;
+		}
+		else if (this->id == CellType::CT_DOOR_OPEN)
+		{
+			this->id = CellType::CT_DOOR_CLOSED;
 		}
 	}
 	
@@ -23,7 +27,6 @@ namespace MorningRitual
 			case CellType::CT_POND:
 
 			case CellType::CT_WALL_H:
-			case CellType::CT_WALL_V:
 			case CellType::CT_WALL_C:
 			case CellType::CT_WALL_T:
 			case CellType::CT_WALL_X:

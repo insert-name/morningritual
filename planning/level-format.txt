@@ -15,8 +15,7 @@
 
 
 //Walls
-'H' = Wall Horizontal
-'V' = Wall Vertical
+'H' = Wall Horizontal / Vertical
 'C' = Wall Corner
 'T' = Wall T-Section
 'X' = Wall Cross-Section

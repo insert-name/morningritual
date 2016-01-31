@@ -80,10 +80,9 @@ namespace MorningRitual
 		CT_PAVING_SLAB		= '"',
 
 		CT_WALL_H	= 'H',
-		CT_WALL_V	= 'V',
 		CT_WALL_C	= 'C',
 		CT_WALL_T	= 'T',
-		CT_WALL_X	= 'X',
+		CT_WALL_X	= 'X',	
 		CT_WINDOW_SMALL	= '|',
 		CT_WINDOW_LARGE_L	= '\\',
 		CT_WINDOW_LARGE_R	= '/',
@@ -124,11 +123,26 @@ namespace MorningRitual
 		CT_DOWNSTAIR	= '>',
 	};
 	
+	enum CellRotationMode 
+	{
+		CRM_NONE,
+		CRM_CORNER,
+		CRM_DOOR,
+		CRM_HV,
+		CRM_JUNCTION,
+		CRM_WALLSIDE,
+		CRM_TWOPART,
+	};
+	
 	struct Cell
 	{
 		public:
 			int id;
 			int data;
+			int solid_mask;
+			int self_mask;
+			int wall_mask;
+			int furniture_mask;
 			
 			Cell()
 			{
@@ -145,6 +159,129 @@ namespace MorningRitual
 			void click(World* world);
 			
 			bool getSolid();
+			
+			CellRotationMode getRotationMode() 
+			{
+				switch (this->id) 
+				{
+					case CellType::CT_EMPTY:
+					case CellType::CT_WOOD_FLOOR:
+					case CellType::CT_KITCHEN_FLOOR:
+					case CellType::CT_BATHROOM_FLOOR:
+					case CellType::CT_CARPET_FLOOR:
+					case CellType::CT_GRASS:
+					case CellType::CT_PAVING_SLAB:
+					case CellType::CT_UPSTAIR:
+					case CellType::CT_DOWNSTAIR:
+					return CellRotationMode::CRM_NONE;
+						break;
+
+					case CellType::CT_WALL_C:
+						return CellRotationMode::CRM_CORNER;
+						break;
+					
+					case CellType::CT_L_BATH_LOWER:
+					case CellType::CT_L_BATH_UPPER:
+					case CellType::CT_B_BED_LOWER:
+					case CellType::CT_B_BED_UPPER:
+						return CellRotationMode::CRM_TWOPART;
+						break;
+
+					case CellType::CT_DOOR_OPEN:
+					case CellType::CT_DOOR_CLOSED:
+						return CellRotationMode::CRM_DOOR;
+						break;
+
+					case CellType::CT_WALL_H:
+					case CellType::CT_WINDOW_SMALL:
+					case CellType::CT_WINDOW_LARGE_L:
+					case CellType::CT_WINDOW_LARGE_R:
+						return CellRotationMode::CRM_HV;
+						break;
+
+					case CellType::CT_WALL_T:
+					case CellType::CT_WALL_X:
+					
+						return CellRotationMode::CRM_JUNCTION;
+						break;
+
+					default:
+						return CellRotationMode::CRM_NONE;
+						break;
+				}
+			}
+			
+			sf::Vector2u getTexOffset()
+			{
+				int mask;
+				switch(this->getRotationMode())
+				{
+					case CellRotationMode::CRM_NONE:
+						return sf::Vector2u(0, 0);
+						break;
+					
+					case CellRotationMode::CRM_HV:
+						if (this->getGenericType() == CellGenericType::CGT_WALL)
+							mask = this->wall_mask;
+						else
+							mask = this->self_mask;
+						
+						if (mask == 5 || mask == 4 || mask == 1)
+							return sf::Vector2u(0, 0);
+						else
+							return sf::Vector2u(0, 1);
+						break;
+					
+					case CellRotationMode::CRM_CORNER:
+						if (this->getGenericType() == CellGenericType::CGT_WALL)
+							mask = this->wall_mask;
+						else
+							mask = this->self_mask;
+						
+						if (mask == 3)
+							return sf::Vector2u(0, 1);
+						else if (mask == 6)
+							return sf::Vector2u(1, 1);
+						else if (mask == 12)
+							return sf::Vector2u(1, 0);
+						else if (mask == 9)
+							return sf::Vector2u(0, 0);
+						break;
+					
+					case CellRotationMode::CRM_JUNCTION:
+						if (this->getGenericType() == CellGenericType::CGT_WALL)
+							mask = this->wall_mask;
+						else
+							mask = this->self_mask;
+						
+						if (mask == 7)
+							return sf::Vector2u(0, 0);
+						else if (mask == 14)
+							return sf::Vector2u(0, 1);
+						else if (mask == 11)
+							return sf::Vector2u(1, 0);
+						else if (mask == 13)
+							return sf::Vector2u(1, 1);
+						break;
+					
+					case CellRotationMode::CRM_TWOPART:
+						mask = this->furniture_mask;
+						
+						if (mask == 1)
+							return sf::Vector2u(0, 1);
+						else if (mask == 2)
+							return sf::Vector2u(1, 1);
+						else if (mask == 4)
+							return sf::Vector2u(1, 0);
+						else if (mask == 8)
+							return sf::Vector2u(0, 0);
+						break;
+					
+					default:
+						return sf::Vector2u(0, 0);
+						break;
+				}
+			}
 			
 			sf::Vector2u getTexCoords()
 			{
@@ -174,10 +311,6 @@ namespace MorningRitual
 					return sf::Vector2u(3, 0);
 					break;
 
-				case CellType::CT_WALL_V:
-					return sf::Vector2u(3, 1);
-					break;
-
 				case CellType::CT_WALL_C:
 					return sf::Vector2u(4, 0);
 					break;
@@ -200,6 +333,102 @@ namespace MorningRitual
 
 				case CellType::CT_WINDOW_LARGE_R:
 					return sf::Vector2u(10, 1);
+					break;
+
+				case CellType::CT_DOOR_OPEN:
+					return sf::Vector2u(10, 2);
+					break;
+
+				case CellType::CT_DOOR_CLOSED:
+					return sf::Vector2u(8, 2);
+					break;
+
+				case CellType::CT_K_COUNTER_STRAIGHT:
+					return sf::Vector2u(0, 4);
+					break; 
+
+				case CellType::CT_K_COUNTER_INNER:
+					return sf::Vector2u(4, 4);
+					break;
+
+				case CellType::CT_K_COUNTER_OUTER:
+					return sf::Vector2u(2, 4);
+					break;
+
+				case CellType::CT_K_COUNTER_DOOR:
+					return sf::Vector2u(0, 6);
+					break;
+
+				case CellType::CT_K_OVEN:
+					return sf::Vector2u(8, 4);
+					break;
+
+				case CellType::CT_K_OVEN_DOOR:
+					return sf::Vector2u(10, 4);
+					break;
+
+				case CellType::CT_K_WCHINE:
+					return sf::Vector2u(2, 6);
+					break;
+
+				case CellType::CT_K_SINK:
+					return sf::Vector2u(3, 1);
+					break;
+
+				case CellType::CT_L_SHOWER:
+					return sf::Vector2u(6, 6);
+					break;
+
+				case CellType::CT_L_TOILET:
+					return sf::Vector2u(8, 6);
+					break;
+
+				case CellType::CT_L_SINK:
+					return sf::Vector2u(10, 6);
+					break;
+
+				case CellType::CT_L_BATH_UPPER:
+					return sf::Vector2u(0, 8);
+					break;
+
+				case CellType::CT_L_BATH_LOWER:
+					return sf::Vector2u(2, 8);
+					break;
+
+				case CellType::CT_B_BED_UPPER:
+					return sf::Vector2u(4, 8);
+					break;
+
+				case CellType::CT_B_BED_LOWER:
+					return sf::Vector2u(6, 8);
+					break;
+
+				case CellType::CT_B_TABLE:
+					return sf::Vector2u(8, 8);
+					break;
+
+				case CellType::CT_B_WARDROBE_L:
+					return sf::Vector2u(0, 10);
+					break;
+
+				case CellType::CT_B_WARDROBE_R:
+					return sf::Vector2u(2, 10);
+					break;
+
+				case CellType::CT_B_WARDROBE_L_DOOR:
+					return sf::Vector2u(4, 10);
+					break;
+
+				case CellType::CT_B_WARDROBE_R_DOOR:
+					return sf::Vector2u(6, 10);
+					break;
+				
+				case CellType::CT_UPSTAIR:
+					return sf::Vector2u(4, 2);
+					break;
+
+				case CellType::CT_DOWNSTAIR:
+					return sf::Vector2u(6, 2);
 					break;
 
 				default:
@@ -227,7 +456,6 @@ namespace MorningRitual
 						break;
 					
 					case CellType::CT_WALL_H:
-					case CellType::CT_WALL_V:
 					case CellType::CT_WALL_C:
 					case CellType::CT_WALL_T:
 					case CellType::CT_WALL_X:

@@ -146,7 +146,7 @@ namespace MorningRitual
 			{
 				Cell* cell = visible_layer->get(i, j);
 				
-				sf::Vector2u pos = this->getTileRectangle(cell) * (unsigned int)64;
+				sf::Vector2u pos = (this->getTileRectangle(cell) + cell->getTexOffset()) * (unsigned int)64;
 				tile.setTextureRect(sf::IntRect(pos.x, pos.y, 64, 64));
 				tile.setPosition(sf::Vector2f(64.0f * i, 64.0f * j));
 		

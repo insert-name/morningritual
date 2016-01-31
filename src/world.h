@@ -48,12 +48,17 @@ namespace MorningRitual
 			std::string loadFile(std::string filename);
 			void addLayer(int w, int h, std::string data);
 			
+			void rotafyCells();
+			
 			Cell* get(glm::ivec3 p);
 			
 			Path findPath(glm::ivec3 p1, glm::ivec3 p2);
 			bool canTraverse(glm::ivec3 p1, glm::ivec3 p2);
 			std::vector<glm::ivec3> getMooreLocality(glm::ivec3 p, bool include_depth = true);
 			glm::ivec3 findNearbyEmpty(glm::ivec3 pos);
+			
+			CellType getCellTypeAt(glm::ivec3 pos);
+			int getCellRotationMask(glm::ivec3 pos, CellType type, int all_solid);
 	};
 }
 
