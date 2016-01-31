@@ -1,0 +1,16 @@
+the simplest level
+32
+24
+1
+lvl_layer0.txt
+1
+Bill 
+Sprite
+11
+8
+14
+BRUSH_TEETH
+SHOWER
+TOILET
+
+
