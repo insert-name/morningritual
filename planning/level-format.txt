@@ -54,7 +54,7 @@
 'W' = Washing Machine
 'S' = Kitchen Sink
 
-'T' = Toilet
+'u' = Toilet
 'p' = Shower
 's' = Bathroom Sink
 'B' = Bath Upper
