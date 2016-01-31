@@ -20,6 +20,10 @@ namespace MorningRitual
 			glm::ivec3 notify_pos = glm::ivec3(-1, -1, -1);
 			bool decay = true;
 			
+			sf::Color font_colour = sf::Color::Black;
+			int font_size = 32;
+			bool font_bold = false;
+			
 			void tick();
 			void click(Game* game);
 	};

@@ -36,6 +36,9 @@ namespace MorningRitual
 		}
 		
 		this->time ++;
+		
+		if (this->timeleft > 0)
+			this->timeleft --;
 	}
 	
 	void World::load(std::string levelname)
@@ -46,15 +49,24 @@ namespace MorningRitual
 		
 		std::vector<std::string> values = split(data, '\n');
 		
-		this->name = values[0];
-		int w = std::stoi(values[1]);
-		int h = std::stoi(values[2]);
-		this->depth = std::stoi(values[3]);
+		int pos = 0;
+		
+		this->name = values[pos];
+		pos ++;
+		int w = std::stoi(values[pos]);
+		pos ++;
+		int h = std::stoi(values[pos]);
+		pos ++;
+		this->depth = std::stoi(values[pos]);
+		pos ++;
 		
 		for (int i = 0; i < this->depth; i ++)
 		{
-			this->addLayer(w, h, this->loadFile(this->data_directory + "/levels/" + levelname + "/" + values[4 + i]));
+			this->addLayer(w, h, this->loadFile(this->data_directory + "/levels/" + levelname + "/" + values[pos + i]));
 		}
+		
+		pos += this->depth;
+		this->timeleft = std::stoi(values[pos]) * 60;
 		
 	}
 	

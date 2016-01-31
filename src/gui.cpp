@@ -19,6 +19,9 @@ namespace MorningRitual
 		this->permanent.back().decay = false;
 		this->permanent.back().texture.loadFromFile(this->data_directory + "/GUI/29 clock.png");
 		this->permanent.back().position = sf::Vector2f(350.0f, 0.0f);
+		this->permanent.back().font_colour = sf::Color::Red;
+		this->permanent.back().font_bold = true;
+		this->permanent.back().font_size = 40;
 		
 		//Setup sound manager
 		this->sound_manager.data_directory = this->data_directory;

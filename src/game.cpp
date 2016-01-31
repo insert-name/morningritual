@@ -12,7 +12,7 @@ namespace MorningRitual
 	{
 		printf("Created game\n");
 		
-		this->window.create(sf::VideoMode(800, 600), "Morning Ritual");
+		this->window.create(sf::VideoMode(800, 600), "Morning Ritual", sf::Style::Titlebar | sf::Style::Close);
 		this->window.setVerticalSyncEnabled(true);
 		this->window.setFramerateLimit(60);
 		
@@ -222,10 +222,10 @@ namespace MorningRitual
 			this->gui.tick();
 			//Update timer text
 			std::stringstream ss;
-			ss << std::floor(this->world.time / 6.0f) / 10.0f;
+			ss << std::floor(this->world.timeleft / 6.0f) / 10.0f;
 			this->gui.permanent[0].message = "";
 			for (int i = 0; i < 6 - ss.str().size(); i ++) this->gui.permanent[0].message += " ";
-			this->gui.permanent[0].message += "        " + ss.str();
+			this->gui.permanent[0].message += "      " + ss.str();
 			
 			this->draw();
 		}
@@ -308,9 +308,10 @@ namespace MorningRitual
 			message.setPosition(this->view.getCenter() - this->view.getSize() / 2.0f + sf::Vector2f(widget->position.x + 16, widget->position.y + 8));
 			message.setFont(this->mainfont);
 			message.setString(widget->message);
-			message.setCharacterSize(32);
-			message.setStyle(sf::Text::Bold);
-			message.setColor(sf::Color::Black);
+			message.setCharacterSize(widget->font_size);
+			if (widget->font_bold)
+				message.setStyle(sf::Text::Bold);
+			message.setColor(widget->font_colour);
 			
 			window.draw(message);
 		}
@@ -330,9 +331,10 @@ namespace MorningRitual
 			message.setPosition(this->view.getCenter() - this->view.getSize() / 2.0f + sf::Vector2f(widget->position.x + 16, widget->position.y + 8));
 			message.setFont(this->mainfont);
 			message.setString(widget->message);
-			message.setCharacterSize(32);
-			message.setStyle(sf::Text::Bold);
-			message.setColor(sf::Color::Black);
+			message.setCharacterSize(widget->font_size);
+			if (widget->font_bold)
+				message.setStyle(sf::Text::Bold);
+			message.setColor(widget->font_colour);
 			
 			window.draw(message);
 		}
