@@ -8,11 +8,6 @@ namespace MorningRitual
 	Entity::Entity()
 	{
 		printf("Created entity\n");
-		
-		this->tasks.push_back(TaskType::TT_SHOWER);
-		this->tasks.push_back(TaskType::TT_COOK_FOOD);
-		this->tasks.push_back(TaskType::TT_FIND_FOOD);
-		this->tasks.push_back(TaskType::TT_WASH_PLATES);
 	}
 	
 	void Entity::tick(Game* game)
