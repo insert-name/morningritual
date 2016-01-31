@@ -43,12 +43,12 @@ namespace MorningRitual
 			
 			int time = 0;
 			int timeleft = 0;
+			int complete = 100;
 			
-			std::vector<std::string> level_list;
 			int level_id = 0;
 			
 			World();
-			void setup();
+			void setup(bool completed_last = true);
 			void tick(Game* game);
 			void load(std::string levelname);
 			std::string loadFile(std::string filename);

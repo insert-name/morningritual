@@ -14,18 +14,14 @@ namespace MorningRitual
 	World::World()
 	{
 		printf("Created world\n");
-		
-		this->level_list.push_back("lvl1");
-		this->level_list.push_back("lvl2");
-		this->level_list.push_back("lvl3");
-		this->level_list.push_back("lvl4");
-		this->level_list.push_back("lvl5");
 	}
 	
-	void World::setup()
+	void World::setup(bool completed_last)
 	{
-		this->load(this->level_list[this->level_id]);
-		this->level_id ++;
+		if (completed_last)
+			this->level_id ++;
+		
+		this->load("lvl" + std::to_string(this->level_id));
 	}
 	
 	void World::tick(Game* game)
@@ -35,10 +31,25 @@ namespace MorningRitual
 			entities[i].tick(game);
 		}
 		
+		if (this->time == 0)
+			game->gui.notify("Welcome to '" + this->name + "'!");
+		
 		this->time ++;
 		
 		if (this->timeleft > 0)
 			this->timeleft --;
+		else
+		{
+			game->gui.notify("Level failed, out of time!", glm::ivec3(-1, -1, -1), sf::Color(150, 30, 30));
+			game->gui.notify("Restarting level...", glm::ivec3(-1, -1, -1), sf::Color(150, 30, 30));
+			this->setup(false);
+		}
+		
+		if (this->complete < 100)
+			this->complete --;
+		
+		if (this->complete <= 0)
+			this->setup();
 	}
 	
 	void World::load(std::string levelname)
@@ -47,6 +58,9 @@ namespace MorningRitual
 		this->entities.clear();
 		this->time = 0;
 		this->timeleft = 0;
+		this->complete = 100;
+		
+		printf(("Trying to load level '" + levelname + "'\n").c_str());
 		
 		std::string data = this->loadFile(this->data_directory + "/levels/" + levelname + "/lvl_0_root.txt");
 		
@@ -56,49 +70,66 @@ namespace MorningRitual
 		
 		int pos = 0;
 		
+		printf("Loading level name...\n");
 		this->name = values[pos];
 		pos ++;
+		printf("Loading level width...\n");
 		int w = std::stoi(values[pos]);
 		pos ++;
+		printf("Loading level height...\n");
 		int h = std::stoi(values[pos]);
 		pos ++;
+		printf("Loading level depth...\n");
 		this->depth = std::stoi(values[pos]);
 		pos ++;
 		
 		for (int i = 0; i < this->depth; i ++)
 		{
+			printf("Loading level layer %d...\n", i);
 			this->addLayer(w, h, this->loadFile(this->data_directory + "/levels/" + levelname + "/" + values[pos + i]));
 		}
 		
 		pos += this->depth;
+		printf("Loading time to complete level...\n");
 		this->timeleft = std::stoi(values[pos]) * 60;
 		pos ++;
+		printf("Loading number of characters...\n");
 		int character_count = std::stoi(values[pos]);
 		pos ++;
 		
 		for (int i = 0; i < character_count; i ++)
 		{
 			this->entities.push_back(Entity());
+			printf("Loading character name...\n");
 			this->entities.back().name = values[pos];
+			printf(("Character name is '" + values[pos] + "'\n").c_str());
 			pos ++;
 			//Read sprite here
+			printf("Reading sprite...\n");
 			pos ++;
+			printf("Loading character x...\n");
 			this->entities.back().pos.x = std::stoi(values[pos]);
 			pos ++;
+			printf("Loading character y...\n");
 			this->entities.back().pos.y = std::stoi(values[pos]);
 			pos ++;
+			printf("Loading character z...\n");
 			this->entities.back().pos.z = std::stoi(values[pos]);
 			pos ++;
+			printf("Loading character task_count...\n");
 			int task_count = std::stoi(values[pos]);
 			pos ++;
 			
 			for (int j = 0; j < task_count; j ++)
 			{
+				printf("Loading task...\n");
 				this->entities.back().tasks.push_back(this->entities.back().stringToTask(values[pos]));
+				printf(("Task name is '" + values[pos] + "'.\n").c_str());
 				pos ++;
 			}
 		}
 		
+		printf("Rotating cells...\n");
 		this->rotafyCells();
 	}
 	

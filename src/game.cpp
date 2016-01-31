@@ -167,6 +167,13 @@ namespace MorningRitual
 				}
 			}
 			
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::L) && this->world.time > 60)
+			{
+				//SKIP LEVEL!
+				this->gui.notify("DEVELOPER HACK! SKIPPED LEVEL!");
+				this->world.setup(true);
+			}
+			
 			sf::Vector2f current_viewpos = this->view.getCenter();
 			
 			if (this->view_state == ViewState::FREE)
@@ -241,8 +248,11 @@ namespace MorningRitual
 					done ++;
 			}
 			
-			if (done == this->world.entities.size())
-				this->world.setup();
+			if (done == this->world.entities.size() && this->world.complete >= 100)
+			{
+				this->world.complete = 99;
+				this->gui.notify("Level complete!", glm::ivec3(-1, -1, -1), sf::Color(30, 150, 30));
+			}
 			
 			this->gui.permanent[1].message = "       " + std::to_string(done) + " / " + std::to_string(this->world.entities.size());
 			

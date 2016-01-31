@@ -1,0 +1,1 @@
+/home/barry/Documents/Projects/morningritual/build/CMakeFiles/morningritual.dir

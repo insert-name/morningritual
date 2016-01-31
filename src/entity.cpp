@@ -150,6 +150,8 @@ namespace MorningRitual
 			}
 		}
 		
+		printf("CAN'T FIND TARGET %d!\n", type);
+		
 		return glm::ivec3(-1, -1, -1);
 	}
 	

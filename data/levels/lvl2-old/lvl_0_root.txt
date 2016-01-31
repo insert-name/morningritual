@@ -1,0 +1,15 @@
+Squeeky Clean
+24
+22
+1
+lvl_layer0.txt
+15
+1
+John Boy
+anything
+5
+18
+0
+2
+WASH_PLATES
+SHOWER
