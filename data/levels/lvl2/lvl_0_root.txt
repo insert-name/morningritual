@@ -1,4 +1,4 @@
-Washy Pooper
+Squeeky Clean
 32
 2
 1
@@ -11,7 +11,5 @@ anything
 20
 1
 3
-TOILET
+WASH_PLATES
 SHOWER
-
-
