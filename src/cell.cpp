@@ -7,16 +7,16 @@ namespace MorningRitual
 {
 	bool Cell::isSolid()
 	{
-		return this->solid;
+		return this->getGenericType() == CellGenericType::CGT_WALL;
 	}
 	
 	void Cell::click(World* world)
 	{
 		printf("Clicked cell\n");
 		
-		if (this->type == CellType::CT_DOOR)
+		if (this->getGenericType() == CellGenericType::CGT_DOOR)
 		{
-			this->type = CellType::CT_FLOOR;
+			this->id = CellType::CT_WOOD_FLOOR;
 		}
 	}
 }

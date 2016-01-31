@@ -2,6 +2,7 @@
 
 #include "game.h"
 #include "common.h"
+#include "menu.h"
 
 namespace MorningRitual
 {
@@ -34,6 +35,19 @@ namespace MorningRitual
 		
 		//Find the right font
 		this->mainfont.loadFromFile(this->data_directory + "/fonts/ENYO_Serif_light.ttf");
+		
+		Menu main_menu;
+		main_menu.back_tex.loadFromFile(this->data_directory + "/GUI/title.png");
+		
+		main_menu.menu_items.push_back(MenuItem());
+		main_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/title menu start game btn.png");
+		main_menu.menu_items.back().position = sf::Vector2f(500, 200);
+		
+		main_menu.menu_items.push_back(MenuItem());
+		main_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/title menu options btn.png");
+		main_menu.menu_items.back().position = sf::Vector2f(500, 300);
+		
+		main_menu.run(&this->window);
 	}
 	
 	void Game::run()
@@ -136,7 +150,7 @@ namespace MorningRitual
 				tile.setTextureRect(sf::IntRect(pos.x, pos.y, 64, 64));
 				tile.setPosition(sf::Vector2f(64.0f * i, 64.0f * j));
 		
-				if (cell->type != CellType::CT_EMPTY)
+				if (cell->id != CellType::CT_EMPTY)
 					this->window.draw(tile);
 			}
 		}
@@ -196,9 +210,9 @@ namespace MorningRitual
 	
 	sf::Vector2u Game::getTileRectangle(Cell* cell)
 	{
-		switch(cell->type)
+		switch(cell->id)
 		{
-			case CellType::CT_EMPTY:
+			/*case CellType::CT_EMPTY:
 				return sf::Vector2u(0, 0);
 				break;
 			case CellType::CT_FLOOR:
@@ -249,7 +263,7 @@ namespace MorningRitual
 				break;
 			case CellType::CT_DOWNSTAIR:
 				return sf::Vector2u(0, 2);
-				break;
+				break;*/
 			default:
 				return sf::Vector2u(0, 0);
 				break;

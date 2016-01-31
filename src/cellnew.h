@@ -9,7 +9,7 @@ namespace MorningRitual
 		CGT_FURNITURE,
 		CGT_UPSTAIR,
 		CGT_DOWNSTAIR,
-	}:
+	};
 	
 	enum CellType
 	{
@@ -66,7 +66,7 @@ namespace MorningRitual
 
 		CT_UPSTAIR		= '<',
 		CT_DOWNSTAIR	= '>',
-	}
+	};
 	
 	struct Cell
 	{
@@ -136,5 +136,5 @@ namespace MorningRitual
 						break;
 				}
 			}
-	}:
+	};
 }

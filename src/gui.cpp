@@ -19,8 +19,8 @@ namespace MorningRitual
 		this->sound_manager.data_directory = this->data_directory;
 		this->sound_manager.setup();
 		this->sound_manager.playMusic(MusicType::MAIN_GAMEPLAY);
-		this->sound_manager.playMusic(MusicType::PANIC_1);
-		this->sound_manager.playMusic(MusicType::PANIC_2);
+		//this->sound_manager.playMusic(MusicType::PANIC_1);
+		//this->sound_manager.playMusic(MusicType::PANIC_2);
 	}
 	
 	void GUI::tick()

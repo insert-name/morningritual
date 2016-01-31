@@ -32,7 +32,7 @@ namespace MorningRitual
 				
 					case EntityState::WANDER:
 						if (this->lifetime % 40 == 0)
-							this->wander_direction = glm::ivec3(random() % 3 - 1, random() % 3 - 1, 0);
+							this->wander_direction = glm::ivec3(rand() % 3 - 1, rand() % 3 - 1, 0);
 						if (this->lifetime % 20 == 0)
 							this->moveTo(this->pos + this->wander_direction, &game->world);
 						break;

@@ -113,10 +113,10 @@ namespace MorningRitual
 				if (std::abs(highest - lowest) != 1)
 				return false;
 			
-			if (this->get(glm::ivec3(p1.x, p1.y, lowest))->type != CellType::CT_UPSTAIR)
+			if (this->get(glm::ivec3(p1.x, p1.y, lowest))->id != CellType::CT_UPSTAIR)
 				return false;
 				
-			if (this->get(glm::ivec3(p1.x, p1.y, highest))->type != CellType::CT_DOWNSTAIR)
+			if (this->get(glm::ivec3(p1.x, p1.y, highest))->id != CellType::CT_DOWNSTAIR)
 				return false;
 		}
 		
