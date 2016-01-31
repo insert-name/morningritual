@@ -44,6 +44,9 @@ namespace MorningRitual
 			int time = 0;
 			int timeleft = 0;
 			
+			std::vector<std::string> level_list;
+			int level_id = 0;
+			
 			World();
 			void setup();
 			void tick(Game* game);

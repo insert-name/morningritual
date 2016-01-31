@@ -240,6 +240,10 @@ namespace MorningRitual
 				if (this->world.entities[i].tasks.size() == 0)
 					done ++;
 			}
+			
+			if (done == this->world.entities.size())
+				this->world.setup();
+			
 			this->gui.permanent[1].message = "       " + std::to_string(done) + " / " + std::to_string(this->world.entities.size());
 			
 			this->draw();

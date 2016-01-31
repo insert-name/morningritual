@@ -14,11 +14,18 @@ namespace MorningRitual
 	World::World()
 	{
 		printf("Created world\n");
+		
+		this->level_list.push_back("lvl1");
+		this->level_list.push_back("lvl2");
+		this->level_list.push_back("lvl3");
+		this->level_list.push_back("lvl4");
+		this->level_list.push_back("lvl5");
 	}
 	
 	void World::setup()
 	{
-		this->load("Level 3");
+		this->load(this->level_list[this->level_id]);
+		this->level_id ++;
 	}
 	
 	void World::tick(Game* game)
