@@ -130,6 +130,38 @@ namespace MorningRitual
 					return sf::Vector2u(10, 1);
 					break;
 
+				case CellType::CT_DOOR_OPEN:
+					return sf::Vector2u(10, 2);
+					break;
+
+				case CellType::CT_DOOR_CLOSED:
+					return sf::Vector2u(8, 2);
+					break;
+
+				case CellType::CT_K_COUNTER_STRAIGHT:
+					return sf::Vector2u(0, 4);
+					break; 
+
+				case CellType::CT_K_COUNTER_INNER:
+					return sf::Vector2u(4, 4);
+					break;
+
+				case CellType::CT_K_COUNTER_OUTER:
+					return sf::Vector2u(2, 4);
+					break;
+
+				case CellType::CT_K_COUNTER_DOOR:
+					return sf::Vector2u(0, 6);
+					break;
+
+				case CellType::CT_K_OVEN:
+					return sf::Vector2u(8, 4);
+					break;
+
+				case CellType::CT_K_OVEN_DOOR:
+					return sf::Vector2u(10, 4);
+					break;
+
 				default:
 					return sf::Vector2u(0, 0);
 					break;
