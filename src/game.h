@@ -25,7 +25,10 @@ namespace MorningRitual
 			sf::View view;
 			sf::Vector2f view_velocity;
 			sf::Vector2f view_target;
+			int ztarget = 0;
 			ViewState view_state = ViewState::FREE;
+			int view_timer = 0;
+			bool changez = false;
 			
 			bool playing = true;
 			

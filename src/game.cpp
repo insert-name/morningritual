@@ -134,9 +134,15 @@ namespace MorningRitual
 					
 					case sf::Event::KeyPressed:
 						if (event.key.code == sf::Keyboard::Key::Comma)
-							this->current_layer = std::min(this->world.depth - 1, std::max(0, this->current_layer + 1));
+						{
+							sf::Vector2f a = this->view.getCenter() / 64.0f;
+							this->moveTo(glm::ivec3(a.x, a.y, std::min(this->world.depth - 1, std::max(0, this->current_layer + 1))));
+						}
 						if (event.key.code == sf::Keyboard::Key::Period)
-							this->current_layer = std::min(this->world.depth - 1, std::max(0, this->current_layer - 1));
+						{
+							sf::Vector2f b = this->view.getCenter() / 64.0f;
+							this->moveTo(glm::ivec3(b.x, b.y, std::min(this->world.depth - 1, std::max(0, this->current_layer - 1))));
+						}
 						break;
 					
 					case sf::Event::MouseButtonPressed:
@@ -192,10 +198,15 @@ namespace MorningRitual
 				
 				this->view_velocity = offset * 0.05f;
 				
-				if (std::sqrt(offset.x * offset.x + offset.y * offset.y) < 4.0f)
+				if (this->view_timer == 20 && this->changez)
+					this->current_layer = this->ztarget;
+				
+				if (std::sqrt(offset.x * offset.x + offset.y * offset.y) < 4.0f && this->view_timer > 40)
 				{
 					this->view_state = ViewState::FREE;
 				}
+				
+				this->view_timer ++;
 			}
 			
 			current_viewpos += this->view_velocity;
@@ -274,6 +285,14 @@ namespace MorningRitual
 	
 	void Game::drawGUI()
 	{
+		sf::RectangleShape cover;
+		cover.setPosition(this->view.getCenter() - sf::Vector2f(400, 300));
+		cover.setSize(sf::Vector2f(800, 600));
+		cover.setFillColor(sf::Color(0, 0, 0, std::max(0, 255 - 10 * std::abs(20 - this->view_timer))));
+		
+		if (this->changez)
+			this->window.draw(cover);
+		
 		for (int i = 0; i < this->gui.notification_widgets.size(); i ++)
 		{
 			Widget* widget = &this->gui.notification_widgets[i];
@@ -450,8 +469,13 @@ namespace MorningRitual
 	
 	void Game::moveTo(glm::ivec3 pos)
 	{
-		this->current_layer = pos.z;
 		this->view_target = sf::Vector2f(pos.x, pos.y) * 64.0f;
 		this->view_state = ViewState::MOVETO;
+		this->view_timer = 0;
+		this->ztarget = pos.z;
+		if (this->current_layer != pos.z)
+			this->changez = true;
+		else
+			this->changez = false;
 	}
 }
