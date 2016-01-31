@@ -13,5 +13,5 @@ Sprite
 BRUSH_TEETH
 SHOWER
 TOILET
-
+60
 
