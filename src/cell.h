@@ -5,7 +5,7 @@
 
 namespace MorningRitual
 {
-	class World;
+	class Game;
 	
 	/*enum CellType
 	{
@@ -156,7 +156,7 @@ namespace MorningRitual
 				this->data = data;
 			}
 			
-			void click(World* world);
+			void click(Game* game);
 			
 			bool getSolid();
 			
@@ -201,8 +201,15 @@ namespace MorningRitual
 
 					case CellType::CT_WALL_T:
 					case CellType::CT_WALL_X:
-					
 						return CellRotationMode::CRM_JUNCTION;
+						break;
+					
+					case CellType::CT_L_SHOWER:
+					case CellType::CT_L_SINK:
+					case CellType::CT_L_TOILET:
+					case CellType::CT_K_SINK:
+					case CellType::CT_K_OVEN:
+						return CellRotationMode::CRM_WALLSIDE;
 						break;
 
 					default:
@@ -248,6 +255,15 @@ namespace MorningRitual
 							return sf::Vector2u(0, 0);
 						break;
 					
+					case CellRotationMode::CRM_DOOR:
+						mask = this->wall_mask;
+						
+						if (mask & 5 == 5)
+							return sf::Vector2u(0, 0);
+						else
+							return sf::Vector2u(0, 1);
+						break;
+					
 					case CellRotationMode::CRM_JUNCTION:
 						if (this->getGenericType() == CellGenericType::CGT_WALL)
 							mask = this->wall_mask;
@@ -277,6 +293,19 @@ namespace MorningRitual
 							return sf::Vector2u(0, 0);
 						break;
 					
+					case CellRotationMode::CRM_WALLSIDE:
+						mask = this->wall_mask;
+						
+						if (mask == 1)
+							return sf::Vector2u(1, 0);
+						else if (mask == 2)
+							return sf::Vector2u(0, 0);
+						else if (mask == 4)
+							return sf::Vector2u(0, 1);
+						else if (mask == 8)
+							return sf::Vector2u(1, 1);
+						break;
+					
 					default:
 						return sf::Vector2u(0, 0);
 						break;
@@ -297,6 +326,10 @@ namespace MorningRitual
 
 				case CellType::CT_KITCHEN_FLOOR:
 					return sf::Vector2u(2, 0);
+					break;
+				
+				case CellType::CT_K_SINK:
+					return sf::Vector2u(6, 4);
 					break;
 
 				case CellType::CT_BATHROOM_FLOOR:
@@ -369,10 +402,6 @@ namespace MorningRitual
 
 				case CellType::CT_K_WCHINE:
 					return sf::Vector2u(2, 6);
-					break;
-
-				case CellType::CT_K_SINK:
-					return sf::Vector2u(3, 1);
 					break;
 
 				case CellType::CT_L_SHOWER:

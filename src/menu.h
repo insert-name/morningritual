@@ -30,6 +30,8 @@ namespace MorningRitual
 			std::vector<MenuItem> menu_items;
 			int selected_item = 0;
 			
+			sf::Color unselect_color = sf::Color(120, 80, 40);
+			
 			int run(sf::RenderWindow* window)
 			{
 				while (window->isOpen())
@@ -63,8 +65,8 @@ namespace MorningRitual
 					
 					back.setTexture(this->back_tex);
 					sf::Vector2u a = this->back_tex.getSize();
-					back.setPosition(sf::Vector2f(800, 600) - sf::Vector2f(a.x / 2, a.y / 2));
-					back.setScale(sf::Vector2f(0.5f, 0.5f));
+					back.setPosition(sf::Vector2f(400, 300) - sf::Vector2f(a.x / 2, a.y / 2));
+					//back.setScale(sf::Vector2f(0.5f, 0.5f));
 					
 					window->draw(back);
 					
@@ -76,7 +78,7 @@ namespace MorningRitual
 						item.setPosition(this->menu_items[i].position);
 						
 						if (i != this->selected_item)
-							item.setColor(sf::Color(230, 200, 120));
+							item.setColor(this->unselect_color);
 						
 						window->draw(item);
 					}

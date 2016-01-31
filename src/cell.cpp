@@ -1,21 +1,23 @@
 #include "stdio.h"
 
 #include "cell.h"
-#include "world.h"
+#include "game.h"
 
 namespace MorningRitual
 {
-	void Cell::click(World* world)
+	void Cell::click(Game* game)
 	{
 		printf("Clicked cell\n");
 		
 		if (this->id == CellType::CT_DOOR_CLOSED)
 		{
 			this->id = CellType::CT_DOOR_OPEN;
+			game->gui.sound_manager.playSound(SoundType::DOOR_OPEN);
 		}
 		else if (this->id == CellType::CT_DOOR_OPEN)
 		{
 			this->id = CellType::CT_DOOR_CLOSED;
+			game->gui.sound_manager.playSound(SoundType::DOOR_CLOSE);
 		}
 	}
 	

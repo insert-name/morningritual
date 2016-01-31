@@ -13,6 +13,8 @@ namespace MorningRitual
 		
 		//Set up sound
 		this->sound_buffers[SoundType::NOTIFICATION].loadFromFile(this->data_directory + "/audio/sfx/SFX_notification_popup_010.ogg");
+		this->sound_buffers[SoundType::DOOR_CLOSE].loadFromFile(this->data_directory + "/audio/sfx/SFX_door_wood_close_010.ogg");
+		this->sound_buffers[SoundType::DOOR_OPEN].loadFromFile(this->data_directory + "/audio/sfx/SFX_door_wood_open_010.ogg");
 		
 		//Set up music
 		this->musics[MusicType::MAIN_GAMEPLAY].openFromFile(this->data_directory + "/audio/music/MUSIC_gameplay_danger_low_010.ogg");

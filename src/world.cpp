@@ -34,6 +34,8 @@ namespace MorningRitual
 		{
 			entities[i].tick(game);
 		}
+		
+		this->time ++;
 	}
 	
 	void World::load(std::string levelname)

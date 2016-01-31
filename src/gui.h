@@ -13,6 +13,8 @@ namespace MorningRitual
 		public:
 			std::vector<Widget> notification_widgets;
 			
+			std::vector<Widget> permanent;
+			
 			std::string data_directory;
 			
 			SoundManager sound_manager;

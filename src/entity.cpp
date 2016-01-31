@@ -18,10 +18,19 @@ namespace MorningRitual
 			{
 				case EntityState::PATH:
 					if (this->path.size() > 0)
-						this->moveTo(this->path.pop(), &game->world);
+					{
+						bool moved = this->moveTo(this->path.pop(), &game->world);
+						
+						if (!moved)
+						{
+							this->path.success = false;
+							this->state = EntityState::WANDER;
+							game->gui.notify(this->name + " cannot reach destination", this->pos);
+						}
+					}
 					else
 					{
-						game->gui.notify("Finished pathing", this->pos);
+						game->gui.notify(this->name + " has finished walking", this->pos);
 				
 						if (this->tasks.size() == 0)
 							this->state = EntityState::WANDER;
@@ -30,15 +39,17 @@ namespace MorningRitual
 					}
 					break;
 				
-					case EntityState::WANDER:
-						if (this->lifetime % 40 == 0)
-							this->wander_direction = glm::ivec3(rand() % 3 - 1, rand() % 3 - 1, 0);
-						if (this->lifetime % 20 == 0)
-							this->moveTo(this->pos + this->wander_direction, &game->world);
-						break;
+				case EntityState::WANDER:
+					if (this->lifetime % 40 == 0)
+						this->wander_direction = glm::ivec3(rand() % 3 - 1, rand() % 3 - 1, 0);
+					if (this->lifetime % 20 == 0)
+					{
+						this->moveTo(this->pos + this->wander_direction, &game->world);
+					}
+					break;
 					
-					default:
-						break;
+				default:
+					break;
 						
 			}
 		}
@@ -46,9 +57,13 @@ namespace MorningRitual
 		this->lifetime ++;
 	}
 	
-	void Entity::moveTo(glm::ivec3 pos, World* world)
+	bool Entity::moveTo(glm::ivec3 pos, World* world)
 	{
 		if (world->canTraverse(this->pos, pos))
+		{
 			this->pos = pos;
+			return true;
+		}
+		return false;
 	}
 }

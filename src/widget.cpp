@@ -5,7 +5,8 @@ namespace MorningRitual
 {
 	void Widget::tick()
 	{
-		this->lifetime --;
+		if (this->decay)
+			this->lifetime --;
 		
 		if (this->startlife < 0)
 			this->startlife = this->lifetime;

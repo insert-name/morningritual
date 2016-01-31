@@ -10,6 +10,8 @@ namespace MorningRitual
 	enum SoundType
 	{
 		NOTIFICATION = 0,
+		DOOR_CLOSE = 1,
+		DOOR_OPEN = 2,
 	};
 	
 	enum MusicType

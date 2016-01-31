@@ -1,4 +1,6 @@
 #include "stdio.h"
+#include "string"
+#include "iomanip"
 
 #include "game.h"
 #include "common.h"
@@ -37,15 +39,19 @@ namespace MorningRitual
 		this->mainfont.loadFromFile(this->data_directory + "/fonts/ENYO_Serif_light.ttf");
 		
 		Menu main_menu;
-		main_menu.back_tex.loadFromFile(this->data_directory + "/GUI/title.png");
+		main_menu.back_tex.loadFromFile(this->data_directory + "/GUI/01 title menu.png");
 		
 		main_menu.menu_items.push_back(MenuItem());
 		main_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/title menu start game btn.png");
-		main_menu.menu_items.back().position = sf::Vector2f(500, 200);
+		main_menu.menu_items.back().position = sf::Vector2f(338, 372);
 		
 		main_menu.menu_items.push_back(MenuItem());
 		main_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/title menu options btn.png");
-		main_menu.menu_items.back().position = sf::Vector2f(500, 300);
+		main_menu.menu_items.back().position = sf::Vector2f(360, 428);
+		
+		main_menu.menu_items.push_back(MenuItem());
+		main_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/title menu exit game btn.png");
+		main_menu.menu_items.back().position = sf::Vector2f(342, 486);
 		
 		main_menu.run(&this->window);
 	}
@@ -76,10 +82,20 @@ namespace MorningRitual
 						this->mouseClick(event);
 						break;
 					
+					case sf::Event::MouseButtonReleased:
+						this->mouseRelease(event);
+						break;
+					
+					case sf::Event::MouseWheelScrolled:
+						this->mouseScroll(event);
+						break;
+					
 					default:
 						break;
 				}
 			}
+			
+			sf::Vector2f current_viewpos = this->view.getCenter();
 			
 			if (this->view_state == ViewState::FREE)
 			{
@@ -94,6 +110,14 @@ namespace MorningRitual
 			
 				this->view_velocity.x = std::min(16.0f, std::max(-16.0f, this->view_velocity.x));
 				this->view_velocity.y = std::min(16.0f, std::max(-16.0f, this->view_velocity.y));
+				
+				if (this->mouse_down)
+				{
+					current_viewpos.x += -(sf::Mouse::getPosition(this->window).x - this->mouse_old_pos.x) * 1.0f;
+					current_viewpos.y += -(sf::Mouse::getPosition(this->window).y - this->mouse_old_pos.y) * 1.0f;
+					
+					this->mouse_old_pos = glm::ivec2(sf::Mouse::getPosition(this->window).x, sf::Mouse::getPosition(this->window).y);
+				}
 			
 				this->view_velocity.x -= sign(this->view_velocity.x);
 				this->view_velocity.y -= sign(this->view_velocity.y);
@@ -113,7 +137,6 @@ namespace MorningRitual
 				}
 			}
 			
-			sf::Vector2f current_viewpos = this->view.getCenter();
 			current_viewpos += this->view_velocity;
 			this->view.setCenter(current_viewpos);
 			
@@ -125,6 +148,12 @@ namespace MorningRitual
 			
 			//Tick the GUI
 			this->gui.tick();
+			//Update timer text
+			std::stringstream ss;
+			ss << std::floor(this->world.time / 6.0f) / 10.0f;
+			this->gui.permanent[0].message = "";
+			for (int i = 0; i < 6 - ss.str().size(); i ++) this->gui.permanent[0].message += " ";
+			this->gui.permanent[0].message += "        " + ss.str();
 			
 			this->draw();
 		}
@@ -187,6 +216,28 @@ namespace MorningRitual
 		for (int i = 0; i < this->gui.notification_widgets.size(); i ++)
 		{
 			Widget* widget = &this->gui.notification_widgets[i];
+			
+			sf::Sprite component;
+			component.setTexture(widget->texture);
+			component.setPosition(this->view.getCenter() - this->view.getSize() / 2.0f + widget->position);
+			component.setColor(sf::Color(255, 255, 255, widget->alpha));
+			
+			this->window.draw(component);
+			
+			sf::Text message;
+			message.setPosition(this->view.getCenter() - this->view.getSize() / 2.0f + sf::Vector2f(widget->position.x + 16, widget->position.y + 8));
+			message.setFont(this->mainfont);
+			message.setString(widget->message);
+			message.setCharacterSize(32);
+			message.setStyle(sf::Text::Bold);
+			message.setColor(sf::Color::Black);
+			
+			window.draw(message);
+		}
+		
+		for (int i = 0; i < this->gui.permanent.size(); i ++)
+		{
+			Widget* widget = &this->gui.permanent[i];
 			
 			sf::Sprite component;
 			component.setTexture(widget->texture);
@@ -274,7 +325,7 @@ namespace MorningRitual
 		switch (event.mouseButton.button)
 		{
 			case sf::Mouse::Button::Left:
-				
+			{
 				printf("Left click mouse event at %d, %d\n", event.mouseButton.x, event.mouseButton.y);
 				
 				bool caught_event = false;
@@ -308,12 +359,32 @@ namespace MorningRitual
 					if (click_pos.x >= 0 && click_pos.y >= 0 && click_pos.x < this->world.layers[this->current_layer].w && click_pos.y < this->world.layers[this->current_layer].h)
 					{
 						//It's inside the world
-						this->world.layers[this->current_layer].get(click_pos.x, click_pos.y)->click(&this->world);
+						this->world.layers[this->current_layer].get(click_pos.x, click_pos.y)->click(this);
 					}
 				}
-				
+			}
+				break;
+			
+			case sf::Mouse::Button::Right:
+				this->mouse_down = true;
+				this->mouse_old_pos = glm::vec2(event.mouseButton.x, event.mouseButton.y);
 				break;
 		}
+	}
+	
+	void Game::mouseRelease(sf::Event event)
+	{
+		switch (event.mouseButton.button)
+		{
+			case sf::Mouse::Button::Right:
+				this->mouse_down = false;
+				break;
+		}
+	}
+	
+	void Game::mouseScroll(sf::Event event)
+	{
+		printf("Scrolled mouse wheel\n");
 	}
 	
 	void Game::moveTo(glm::ivec3 pos)

@@ -32,6 +32,7 @@ namespace MorningRitual
 			int lifetime = 0;
 			EntityState state = EntityState::PATH;
 			glm::ivec3 wander_direction = glm::ivec3(0, 0, 0);
+			std::string name = "<Name>";
 			
 			std::vector<TaskType> tasks;
 			
@@ -39,7 +40,7 @@ namespace MorningRitual
 			
 			Entity();
 			void tick(Game* game);
-			void moveTo(glm::ivec3 pos, World* world);
+			bool moveTo(glm::ivec3 pos, World* world);
 	};
 }
 

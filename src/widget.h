@@ -18,6 +18,7 @@ namespace MorningRitual
 			sf::Texture texture;
 			std::string message = "NONE";
 			glm::ivec3 notify_pos = glm::ivec3(-1, -1, -1);
+			bool decay = true;
 			
 			void tick();
 			void click(Game* game);

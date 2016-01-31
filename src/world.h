@@ -41,6 +41,8 @@ namespace MorningRitual
 			
 			std::vector<Entity> entities;
 			
+			int time = 0;
+			
 			World();
 			void setup();
 			void tick(Game* game);

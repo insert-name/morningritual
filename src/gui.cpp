@@ -15,6 +15,11 @@ namespace MorningRitual
 		this->notify("Testing 2");
 		this->notify("Test 3");
 		
+		this->permanent.push_back(Widget());
+		this->permanent.back().decay = false;
+		this->permanent.back().texture.loadFromFile(this->data_directory + "/GUI/29 clock.png");
+		this->permanent.back().position = sf::Vector2f(350.0f, 0.0f);
+		
 		//Setup sound manager
 		this->sound_manager.data_directory = this->data_directory;
 		this->sound_manager.setup();
