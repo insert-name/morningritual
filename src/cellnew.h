@@ -162,6 +162,62 @@ namespace MorningRitual
 					return sf::Vector2u(10, 4);
 					break;
 
+				case CellType::CT_K_WCHINE:
+					return sf::Vector2u(6, 4);
+					break;
+
+				case CellType::CT_K_SINK:
+					return sf::Vector2u(3, 1);
+					break;
+
+				case CellType::CT_L_SHOWER:
+					return sf::Vector2u(6, 6);
+					break;
+
+				case CellType::CT_L_TOILET:
+					return sf::Vector2u(8, 6);
+					break;
+
+				case CellType::CT_L_SINK:
+					return sf::Vector2u(10, 6);
+					break;
+
+				case CellType::CT_L_BATH_UPPER:
+					return sf::Vector2u(0, 8);
+					break;
+
+				case CellType::CT_L_BATH_LOWER:
+					return sf::Vector2u(2, 8);
+					break;
+
+				case CellType::CT_B_BED_UPPER:
+					return sf::Vector2u(4, 8);
+					break;
+
+				case CellType::CT_B_BED_LOWER:
+					return sf::Vector2u(6, 8);
+					break;
+
+				case CellType::CT_B_TABLE:
+					return sf::Vector2u(8, 8);
+					break;
+
+				case CellType::CT_B_WARDROBE_L:
+					return sf::Vector2u(0, 10);
+					break;
+
+				case CellType::CT_B_WARDROBE_R:
+					return sf::Vector2u(2, 10);
+					break;
+
+				case CellType::CT_B_WARDROBE_L_DOOR:
+					return sf::Vector2u(4, 10);
+					break;
+
+				case CellType::CT_B_WARDROBE_R_DOOR:
+					return sf::Vector2u(6, 10);
+					break;
+
 				default:
 					return sf::Vector2u(0, 0);
 					break;
