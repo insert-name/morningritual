@@ -10,48 +10,76 @@
          #.........#
          ###########
 
-' ' = None
+' ' = None/Empty
+'P' = Pond
 
+
+//Walls
 'H' = Wall Horizontal
 'V' = Wall Vertical
 'C' = Wall Corner
 'T' = Wall T-Section
 'X' = Wall Cross-Section
-
-
-'.' = Wood Floor
-',' = Kitchen Floor
-';' = Bathroom Floor
-':' = Carpet Floor
-'*' = Grass
-'`' = Paving Slab
 '|' = Small Window
 '\' = Large Window Left
 '/' = Large Window Right
 
 
+//Floors
+'.' = Wood Floor
+',' = Kitchen Floor
+';' = Bathroom Floor
+':' = Carpet Floor
+'*' = Grass
+'"' = Paving Slab
+
+
+//Doors
 '+' = Door Open
 '-' = Door Closed
 
 
+//Furniture
 't' = Table
 'c' = Chair
 
+'1' = Kitchen Counter Straight
+'2' = Kitchen Counter Inner Corner
+'3' = Kitchen Counter Outer Corner
+'4' = Kitchen Counter Door
 'O' = Oven
-'T' = Toilet
+'o' = Oven Door
+'F' = Fridge
+'f' = Fridge Door
+'W' = Washing Machine
+'S' = Kitchen Sink
 
-'W' = washing machine 
+'T' = Toilet
+'p' = Shower
+'s' = Bathroom Sink
+'B' = Bath Upper
+'b' = Bath Lower
+
+'(' = Bed Upper
+')' = Bed Lower
+'Y' = Bedside Table
+'[' = Wardrobe Left
+']' = Wardrobe Right
+'9' = Wardrobe Door Left
+'0' = Wardrobe Door Right
+
+//Stairs
+'<' = Upstair
+'>' = Downstair
+
+
+////Currently Unused////
 'S' = sofa
 'C' = car
-'B' = bed
 'v' = T.V.
-'{' = left bath
-'}' = right bath 
 '~' = rug
 '0' = pillow 
 'D' = quilt
-'s' = sink
-'w' = wardrobe 
 'M' = mirror 
 'u' = Cleaning utensils
 '*' = coat rack
@@ -60,15 +88,6 @@
 'f' = filing cabinet
 'k' = bookcase
 'g' = console game tile
-<<<<<<< HEAD
 
 
-'<' = Upstair
-'>' = Downstair
-=======
-<<<<<<< HEAD
-'h' = chair
-'F' = fridge 
-=======
->>>>>>> origin/master
->>>>>>> origin/master
+
