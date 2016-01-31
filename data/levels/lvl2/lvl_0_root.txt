@@ -7,9 +7,9 @@ lvl_layer0.txt
 1
 John Boy
 anything
-5
-20
-1
+4
+18
+0
 3
 WASH_PLATES
 SHOWER
