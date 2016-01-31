@@ -3,7 +3,7 @@ Washy Pooper
 2
 1
 lvl_layer0.txt
-60
+15
 1
 John Boy
 anything
