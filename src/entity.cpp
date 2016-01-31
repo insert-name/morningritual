@@ -8,6 +8,11 @@ namespace MorningRitual
 	Entity::Entity()
 	{
 		printf("Created entity\n");
+		
+		this->tasks.push_back(TaskType::TT_SHOWER);
+		this->tasks.push_back(TaskType::TT_COOK_FOOD);
+		this->tasks.push_back(TaskType::TT_FIND_FOOD);
+		this->tasks.push_back(TaskType::TT_WASH_PLATES);
 	}
 	
 	void Entity::tick(Game* game)
@@ -34,8 +39,15 @@ namespace MorningRitual
 				
 						if (this->tasks.size() == 0)
 							this->state = EntityState::WANDER;
+						else if (this->path.success)
+						{
+							this->tasks.pop_back();
+							this->path = game->world.findPath(this->pos, game->world.findNearbyEmpty(this->findTaskTarget(&game->world, this->tasks.back())));
+						}
 						else
-							this->state = EntityState::STAND;
+						{
+							this->state = EntityState::WANDER;
+						}
 					}
 					break;
 				
@@ -46,6 +58,14 @@ namespace MorningRitual
 					{
 						this->moveTo(this->pos + this->wander_direction, &game->world);
 					}
+					
+					if (this->lifetime % 60 == 0 && this->tasks.size() > 0)
+					{
+						this->path = game->world.findPath(this->pos, game->world.findNearbyEmpty(this->findTaskTarget(&game->world, this->tasks.back())));
+						if (this->path.success)
+							this->state = EntityState::PATH;
+					}
+					
 					break;
 					
 				default:
@@ -55,6 +75,45 @@ namespace MorningRitual
 		}
 		
 		this->lifetime ++;
+	}
+	
+	glm::ivec3 Entity::findTaskTarget(World* world, TaskType type)
+	{
+		CellType cell_find;
+		
+		switch(type)
+		{
+			case TaskType::TT_BRUSH_TEETH:
+				cell_find = CellType::CT_L_SINK;
+				break;
+			case TaskType::TT_COOK_FOOD:
+				cell_find = CellType::CT_K_OVEN;
+				break;
+			case TaskType::TT_FIND_FOOD:
+				cell_find = CellType::CT_K_FRIDGE;
+				break;
+			case TaskType::TT_SHOWER:
+				cell_find = CellType::CT_L_SHOWER;
+				break;
+			
+			case TaskType::TT_WASH_PLATES:
+				cell_find = CellType::CT_K_SINK;
+				break;
+		}
+		
+		for (int z = 0; z < world->depth; z ++)
+		{
+			for (int x = 0; x < world->layers[z].w; x ++)
+			{
+				for (int y = 0; y < world->layers[z].h; y ++)
+				{
+					if (world->get(glm::ivec3(x, y, z))->id == cell_find)
+						return glm::ivec3(x, y, z);
+				}
+			}
+		}
+		
+		return glm::ivec3(-1, -1, -1);
 	}
 	
 	bool Entity::moveTo(glm::ivec3 pos, World* world)

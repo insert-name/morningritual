@@ -25,7 +25,15 @@ namespace MorningRitual
 		
 		this->entities.push_back(Entity());
 		this->entities.back().pos = glm::ivec3(3, 1, 0);
-		this->entities.back().path = this->findPath(glm::ivec3(3, 1, 0), glm::ivec3(6, 11, 0));
+		
+		this->entities.push_back(Entity());
+		this->entities.back().pos = glm::ivec3(5, 6, 0);
+		
+		this->entities.push_back(Entity());
+		this->entities.back().pos = glm::ivec3(9, 9, 0);
+		
+		this->entities.push_back(Entity());
+		this->entities.back().pos = glm::ivec3(24, 4, 0);
 	}
 	
 	void World::tick(Game* game)
@@ -288,6 +296,9 @@ namespace MorningRitual
 	
 	glm::ivec3 World::findNearbyEmpty(glm::ivec3 pos)
 	{
+		if (!this->get(pos)->getSolid())
+			return pos;
+		
 		std::vector<glm::ivec3> locals = this->getMooreLocality(pos, false);
 		
 		for (glm::ivec3 place : locals)

@@ -21,8 +21,11 @@ namespace MorningRitual
 	
 	enum TaskType
 	{
-		BRUSH_TEETH,
-		FIND_FOOD,
+		TT_BRUSH_TEETH,
+		TT_FIND_FOOD,
+		TT_COOK_FOOD,
+		TT_SHOWER,
+		TT_WASH_PLATES,
 	};
 	
 	class Entity
@@ -35,6 +38,8 @@ namespace MorningRitual
 			std::string name = "<Name>";
 			
 			std::vector<TaskType> tasks;
+			
+			glm::ivec3 findTaskTarget(World* world, TaskType type);
 			
 			Path path;
 			
