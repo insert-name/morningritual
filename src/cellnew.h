@@ -68,11 +68,69 @@ namespace MorningRitual
 		CT_DOWNSTAIR	= '>',
 	};
 	
+	enum CellRotationMode 
+	{
+		CRM_NONE,
+		CRM_CORNER,
+		CRM_DOOR,
+		CRM_HV,
+		CRM_JUNCTION
+		CRM_WALLSIDE,
+	};
+
 	struct Cell
 	{
 		public:
 			int id;
 			int data;
+
+			CellRotationMode getRotationMode() 
+			{
+				switch (this->id) 
+				{
+					case CellType::CT_EMPTY:
+					case CellType::CT_WOOD_FLOOR:
+					case CellType::CT_KITCHEN_FLOOR:
+					case CellType::CT_BATHROOM_FLOOR:
+					case CellType::CT_CARPET_FLOOR:
+					case CellType::CT_GRASS:
+					case CellType::CT_PAVING_SLAB:
+					return CellRotationMode::CRM_NONE;
+						break;
+
+					case CellType::CT_WALL_C:
+						return CellRotationMode::CRM_CORNER;
+						break;
+
+					case CellType::CT_DOOR_OPEN:
+					case CellType::CT_DOOR_CLOSED:
+						return CellRotationMode::CRM_DOOR;
+						break;
+
+					case CellType::CT_WALL_H:
+					case CellType::CT_WALL_V:
+					case CellType::CT_WINDOW_SMALL:
+					case CellType::CT_WINDOW_LARGE_L:
+					case CellType::CT_WINDOW_LARGE_R:
+						return CellRotationMode::CRM_HV;
+						break;
+
+					case CellType::CT_WALL_T:
+					case CellType::CT_WALL_X:
+					
+						return CellRotationMode::CRM_JUNCTION;
+						break;
+
+					case CellType::CT_EMPTY:
+						return CellRotationMode::CRM_WALLSIDE;
+						break; 
+
+					default:
+						return CellRotationMode::CRM_NONE;
+						break;
+				}
+			}
+
 
 			sf::Vector2u getTexCoords()
 			{
