@@ -225,12 +225,22 @@ namespace MorningRitual
 			
 			//Tick the GUI
 			this->gui.tick();
+			
 			//Update timer text
 			std::stringstream ss;
 			ss << std::floor(this->world.timeleft / 6.0f) / 10.0f;
 			this->gui.permanent[0].message = "";
 			for (int i = 0; i < 6 - ss.str().size(); i ++) this->gui.permanent[0].message += " ";
 			this->gui.permanent[0].message += "      " + ss.str();
+			
+			//Update timer text
+			int done = 0;
+			for (int i = 0; i < this->world.entities.size(); i ++)
+			{
+				if (this->world.entities[i].tasks.size() == 0)
+					done ++;
+			}
+			this->gui.permanent[1].message = "       " + std::to_string(done) + " / " + std::to_string(this->world.entities.size());
 			
 			this->draw();
 		}

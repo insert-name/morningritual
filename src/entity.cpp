@@ -17,7 +17,7 @@ namespace MorningRitual
 	
 	void Entity::tick(Game* game)
 	{
-		if (this->lifetime % 10 == 0)
+		if (this->lifetime % 20 == 0)
 		{
 			switch(this->state)
 			{
@@ -30,19 +30,26 @@ namespace MorningRitual
 						{
 							this->path.success = false;
 							this->state = EntityState::WANDER;
-							game->gui.notify(this->name + " cannot reach destination", this->pos);
+							game->gui.notify(this->name + " cannot reach destination", this->pos, sf::Color(150, 30, 30));
 						}
 					}
 					else
 					{
-						game->gui.notify(this->name + " has finished walking", this->pos);
-				
 						if (this->tasks.size() == 0)
+						{
+							game->gui.notify(this->name + " finished all their tasks", this->pos, sf::Color(30, 150, 30));
 							this->state = EntityState::WANDER;
+						}
 						else if (this->path.success)
 						{
+							game->gui.notify(this->name + " finished " + this->getTaskText(this->tasks.back()), this->pos);
 							this->tasks.pop_back();
 							this->path = game->world.findPath(this->pos, game->world.findNearbyEmpty(this->findTaskTarget(&game->world, this->tasks.back())));
+							
+							if (this->path.success)
+								this->state = EntityState::PATH;
+							else
+								game->gui.notify(this->name + " cannot " + this->getTaskText(this->tasks.back()), this->pos, sf::Color(150, 30, 30));
 						}
 						else
 						{
@@ -52,7 +59,7 @@ namespace MorningRitual
 					break;
 				
 				case EntityState::WANDER:
-					if (this->lifetime % 40 == 0)
+					if (this->lifetime % 60 == 0)
 						this->wander_direction = glm::ivec3(rand() % 3 - 1, rand() % 3 - 1, 0);
 					if (this->lifetime % 20 == 0)
 					{
@@ -75,6 +82,41 @@ namespace MorningRitual
 		}
 		
 		this->lifetime ++;
+	}
+	
+	TaskType Entity::stringToTask(std::string str)
+	{
+		if (str == "BRUSH_TEETH")
+			return TaskType::TT_BRUSH_TEETH;
+		if (str == "COOK_FOOD")
+			return TaskType::TT_COOK_FOOD;
+		if (str == "FIND_FOOD")
+			return TaskType::TT_FIND_FOOD;
+		if (str == "SHOWER")
+			return TaskType::TT_SHOWER;
+		if (str == "WASH_PLATES")
+			return TaskType::TT_WASH_PLATES;
+		
+		return TaskType::TT_COOK_FOOD;
+	}
+	
+	std::string Entity::getTaskText(TaskType type)
+	{
+		switch(type)
+		{
+			case TaskType::TT_BRUSH_TEETH:
+				return "brushing teeth";
+			case TaskType::TT_COOK_FOOD:
+				return "cooking food";
+			case TaskType::TT_FIND_FOOD:
+				return "finding some food";
+			case TaskType::TT_SHOWER:
+				return "showering";
+			case TaskType::TT_WASH_PLATES:
+				return "washing plates";
+			default:
+					return "a task";
+		}
 	}
 	
 	glm::ivec3 Entity::findTaskTarget(World* world, TaskType type)

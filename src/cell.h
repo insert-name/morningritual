@@ -457,7 +457,7 @@ namespace MorningRitual
 					break;
 				
 				case CellType::CT_K_FRIDGE:
-					return sf::Vector2u(0, 10);
+					return sf::Vector2u(5, 12);
 					break;
 
 				case CellType::CT_B_WARDROBE_R:

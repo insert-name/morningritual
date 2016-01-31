@@ -18,22 +18,7 @@ namespace MorningRitual
 	
 	void World::setup()
 	{
-		this->layers.clear();
-		
 		this->load("Level 3");
-		this->rotafyCells();
-		
-		this->entities.push_back(Entity());
-		this->entities.back().pos = glm::ivec3(3, 1, 0);
-		
-		this->entities.push_back(Entity());
-		this->entities.back().pos = glm::ivec3(5, 6, 0);
-		
-		this->entities.push_back(Entity());
-		this->entities.back().pos = glm::ivec3(9, 9, 0);
-		
-		this->entities.push_back(Entity());
-		this->entities.back().pos = glm::ivec3(24, 4, 0);
 	}
 	
 	void World::tick(Game* game)
@@ -51,6 +36,11 @@ namespace MorningRitual
 	
 	void World::load(std::string levelname)
 	{
+		this->layers.clear();
+		this->entities.clear();
+		this->time = 0;
+		this->timeleft = 0;
+		
 		std::string data = this->loadFile(this->data_directory + "/levels/" + levelname + "/lvl_0_root.txt");
 		
 		//printf(("The contents of the level file " + levelname + " is:\n" + data).c_str());
@@ -75,7 +65,34 @@ namespace MorningRitual
 		
 		pos += this->depth;
 		this->timeleft = std::stoi(values[pos]) * 60;
+		pos ++;
+		int character_count = std::stoi(values[pos]);
+		pos ++;
 		
+		for (int i = 0; i < character_count; i ++)
+		{
+			this->entities.push_back(Entity());
+			this->entities.back().name = values[pos];
+			pos ++;
+			//Read sprite here
+			pos ++;
+			this->entities.back().pos.x = std::stoi(values[pos]);
+			pos ++;
+			this->entities.back().pos.y = std::stoi(values[pos]);
+			pos ++;
+			this->entities.back().pos.z = std::stoi(values[pos]);
+			pos ++;
+			int task_count = std::stoi(values[pos]);
+			pos ++;
+			
+			for (int j = 0; j < task_count; j ++)
+			{
+				this->entities.back().tasks.push_back(this->entities.back().stringToTask(values[pos]));
+				pos ++;
+			}
+		}
+		
+		this->rotafyCells();
 	}
 	
 	void World::rotafyCells()

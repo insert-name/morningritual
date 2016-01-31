@@ -7,11 +7,12 @@ lvl_layer0.txt
 1
 Bill 
 Sprite
-11
-8
-14
+2
+1
+0
+3
 BRUSH_TEETH
 SHOWER
 TOILET
-60
+
 

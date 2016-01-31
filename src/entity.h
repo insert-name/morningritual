@@ -46,6 +46,8 @@ namespace MorningRitual
 			Entity();
 			void tick(Game* game);
 			bool moveTo(glm::ivec3 pos, World* world);
+			std::string getTaskText(TaskType type);
+			TaskType stringToTask(std::string str);
 	};
 }
 

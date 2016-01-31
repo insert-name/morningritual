@@ -22,7 +22,7 @@ namespace MorningRitual
 			GUI();
 			void setup();
 			void tick();
-			void notify(std::string msg, glm::ivec3 position = glm::ivec3(-1, -1, -1));
+			void notify(std::string msg, glm::ivec3 position = glm::ivec3(-1, -1, -1), sf::Color text_colour = sf::Color::Black);
 	};
 }
 
