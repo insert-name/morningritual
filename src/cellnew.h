@@ -99,6 +99,8 @@ namespace MorningRitual
 						break;
 
 					case CellType::CT_WALL_C:
+					case CellType::CT_K_COUNTER_INNER:
+					case CellType::CT_K_COUNTER_OUTER:
 						return CellRotationMode::CRM_CORNER;
 						break;
 
@@ -117,11 +119,17 @@ namespace MorningRitual
 
 					case CellType::CT_WALL_T:
 					case CellType::CT_WALL_X:
-					
 						return CellRotationMode::CRM_JUNCTION;
 						break;
 
-					case CellType::CT_EMPTY:
+					case CellType::CT_K_COUNTER_STRAIGHT:
+					case CellType::CT_K_OVEN:
+					case CellType::CT_K_FRIDGE:
+					case CellType::CT_K_SINK:
+					case CellType::CT_L_SHOWER:
+					case CellType::CT_L_TOILET:
+					case CellType::CT_L_SINK:
+					case CellType::CT_B_TABLE:
 						return CellRotationMode::CRM_WALLSIDE;
 						break; 
 
