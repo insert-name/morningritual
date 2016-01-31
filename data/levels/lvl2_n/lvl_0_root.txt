@@ -3,6 +3,7 @@ Stair Chaos
 13
 2
 lvl_layer0.txt
+<<<<<<< HEAD
 lvl_layer1.txt
 60
 2
@@ -19,6 +20,14 @@ Martha
 Sprite
 5
 8
+=======
+15
+1
+John Boy
+anything
+4
+18
+>>>>>>> bbd7a213cbb6abdb187831cc7618c1929f539e05
 0
 3
 BRUSH_TEETH
