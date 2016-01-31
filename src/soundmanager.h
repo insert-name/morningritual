@@ -19,6 +19,7 @@ namespace MorningRitual
 		MAIN_GAMEPLAY,
 		PANIC_1,
 		PANIC_2,
+		MENU,
 	};
 	
 	class SoundManager
@@ -40,6 +41,7 @@ namespace MorningRitual
 			void update();
 			void playSound(SoundType type);
 			void playMusic(MusicType type);
+			void stopMusic(MusicType type);
 	};
 }
 

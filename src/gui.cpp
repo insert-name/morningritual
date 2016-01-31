@@ -26,7 +26,7 @@ namespace MorningRitual
 		//Setup sound manager
 		this->sound_manager.data_directory = this->data_directory;
 		this->sound_manager.setup();
-		this->sound_manager.playMusic(MusicType::MAIN_GAMEPLAY);
+		//this->sound_manager.playMusic(MusicType::MAIN_GAMEPLAY);
 		//this->sound_manager.playMusic(MusicType::PANIC_1);
 		//this->sound_manager.playMusic(MusicType::PANIC_2);
 	}

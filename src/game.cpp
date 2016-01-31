@@ -77,6 +77,8 @@ namespace MorningRitual
 		int result;
 		int state = 0;
 		
+		this->gui.sound_manager.playMusic(MusicType::MENU);
+		
 		while (true)
 		{
 			if (state == 0)
@@ -115,6 +117,9 @@ namespace MorningRitual
 				state = 0;
 			}
 		}
+		
+		this->gui.sound_manager.stopMusic(MusicType::MENU);
+		this->gui.sound_manager.playMusic(MusicType::MAIN_GAMEPLAY);
 	}
 	
 	void Game::run()

@@ -17,9 +17,10 @@ namespace MorningRitual
 		this->sound_buffers[SoundType::DOOR_OPEN].loadFromFile(this->data_directory + "/audio/sfx/SFX_door_wood_open_010.ogg");
 		
 		//Set up music
-		this->musics[MusicType::MAIN_GAMEPLAY].openFromFile(this->data_directory + "/audio/music/MUSIC_gameplay_danger_low_010.ogg");
-		this->musics[MusicType::PANIC_1].openFromFile(this->data_directory + "/audio/music/MUSIC_gameplay_danger_medium_010.ogg");
-		this->musics[MusicType::PANIC_2].openFromFile(this->data_directory + "/audio/music/MUSIC_gameplay_danger_high_010.ogg");
+		this->musics[MusicType::MAIN_GAMEPLAY].openFromFile(this->data_directory + "/audio/music/MUSIC_gameplay_low_011.ogg");
+		this->musics[MusicType::PANIC_1].openFromFile(this->data_directory + "/audio/music/MUSIC_gameplay_medium_011.ogg");
+		this->musics[MusicType::PANIC_2].openFromFile(this->data_directory + "/audio/music/MUSIC_gameplay_high_011.ogg");
+		this->musics[MusicType::MENU].openFromFile(this->data_directory + "/audio/music/MUSIC_mainmenu_011.ogg");
 	}
 	
 	void SoundManager::update()
@@ -51,6 +52,13 @@ namespace MorningRitual
 	{
 		this->musics[type].play();
 		this->musics[type].setLoop(true);
+		
+		printf("Playing music\n");
+	}
+	
+	void SoundManager::stopMusic(MusicType type)
+	{
+		this->musics[type].stop();
 		
 		printf("Playing music\n");
 	}
