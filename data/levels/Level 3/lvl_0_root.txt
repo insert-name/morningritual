@@ -3,6 +3,7 @@ the simplest level
 24
 1
 lvl_layer0.txt
+60
 1
 Bill 
 Sprite

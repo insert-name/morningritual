@@ -20,7 +20,7 @@ namespace MorningRitual
 	{
 		this->layers.clear();
 		
-		this->load("Level 1");
+		this->load("Level 3");
 		this->rotafyCells();
 		
 		this->entities.push_back(Entity());
