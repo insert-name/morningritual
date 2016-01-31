@@ -52,15 +52,19 @@ namespace MorningRitual
 		main_menu.menu_items.push_back(MenuItem());
 		main_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/title menu exit game btn.png");
 		main_menu.menu_items.back().position = sf::Vector2f(342, 486);
+		main_menu.menu_items.back().action = 1337;
 		
-		main_menu.run(&this->window);
+		int result = main_menu.run(&this->window);
+		
+		if (result == 1337)
+			this->playing = false;
 	}
 	
 	void Game::run()
 	{
 		printf("Running game...\n");
 		
-		while (this->window.isOpen())
+		while (this->window.isOpen() && this->playing)
 		{
 			sf::Event event;
 			while (this->window.pollEvent(event))
