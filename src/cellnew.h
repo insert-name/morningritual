@@ -118,8 +118,16 @@ namespace MorningRitual
 					return sf::Vector2u(8, 0);
 					break;
 
-				case CellType::CT_WALL_V:
-					return sf::Vector2u(3, 1);
+				case CellType::CT_WINDOW_SMALL:
+					return sf::Vector2u(9, 0);
+					break;
+
+				case CellType::CT_WINDOW_LARGE_L:
+					return sf::Vector2u(10, 0);
+					break;
+
+				case CellType::CT_WINDOW_LARGE_R:
+					return sf::Vector2u(10, 1);
 					break;
 
 				default:
