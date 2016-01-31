@@ -43,6 +43,7 @@ namespace MorningRitual
 						{
 							case sf::Event::Closed:
 								window->close();
+								return 1337;
 								break;
 					
 							case sf::Event::KeyPressed:

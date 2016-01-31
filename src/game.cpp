@@ -44,20 +44,77 @@ namespace MorningRitual
 		main_menu.menu_items.push_back(MenuItem());
 		main_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/title menu start game btn.png");
 		main_menu.menu_items.back().position = sf::Vector2f(338, 372);
+		main_menu.menu_items.back().action = 9001;
 		
 		main_menu.menu_items.push_back(MenuItem());
 		main_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/title menu options btn.png");
 		main_menu.menu_items.back().position = sf::Vector2f(360, 428);
+		main_menu.menu_items.back().action = 9002;
 		
 		main_menu.menu_items.push_back(MenuItem());
 		main_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/title menu exit game btn.png");
 		main_menu.menu_items.back().position = sf::Vector2f(342, 486);
 		main_menu.menu_items.back().action = 1337;
 		
-		int result = main_menu.run(&this->window);
+		Menu options_menu;
+		options_menu.back_tex.loadFromFile(this->data_directory + "/GUI/01 title menu.png");
 		
-		if (result == 1337)
-			this->playing = false;
+		options_menu.menu_items.push_back(MenuItem());
+		options_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/options menu BGM btn.png");
+		options_menu.menu_items.back().position = sf::Vector2f(382, 372);
+		options_menu.menu_items.back().action = 1;
+		
+		options_menu.menu_items.push_back(MenuItem());
+		options_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/options menu SFX btn.png");
+		options_menu.menu_items.back().position = sf::Vector2f(384, 428);
+		options_menu.menu_items.back().action = 2;
+		
+		options_menu.menu_items.push_back(MenuItem());
+		options_menu.menu_items.back().tex.loadFromFile(this->data_directory + "/GUI/options menu back btn.png");
+		options_menu.menu_items.back().position = sf::Vector2f(378, 486);
+		options_menu.menu_items.back().action = 3;
+		
+		int result;
+		int state = 0;
+		
+		while (true)
+		{
+			if (state == 0)
+				result = main_menu.run(&this->window);
+			else
+				result = options_menu.run(&this->window);
+			
+			if (result == 1337)
+			{
+				this->playing = false;
+				break;
+			}
+			else if (result == 9001)
+			{
+				//TO THE GAME!
+				break;
+			}
+			else if (result == 9002)
+			{
+				state = 1;
+			}
+			else if (result == 1)
+			{
+				//BACKGROUND MUSIC
+				this->gui.sound_manager.back_muted ^= true;
+				this->gui.sound_manager.update();
+			}
+			else if (result == 2)
+			{
+				//SOUND
+				this->gui.sound_manager.sound_muted ^= true;
+				this->gui.sound_manager.update();
+			}
+			else if (result == 3)
+			{
+				state = 0;
+			}
+		}
 	}
 	
 	void Game::run()

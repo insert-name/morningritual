@@ -31,9 +31,13 @@ namespace MorningRitual
 			
 			sf::Music musics[10];
 			
+			bool sound_muted = false;
+			bool back_muted = false;
+			
 			
 			SoundManager();
 			void setup();
+			void update();
 			void playSound(SoundType type);
 			void playMusic(MusicType type);
 	};
